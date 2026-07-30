@@ -23,7 +23,7 @@ namespace CRadventure.Services
             return documentos.Documents.Select(d => d.Data).ToList();
         }
 
-        // Método para obtener un tour específico (por si luego necesitas una página de detalle)
+        // Método para obtener un tour específico para la pagina de tour detalle
         public async Task<TourModel?> ObtenerTourPorIdAsync(string id)
         {
             var documento = await CrossFirebaseFirestore.Current
