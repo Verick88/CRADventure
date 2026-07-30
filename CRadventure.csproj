@@ -61,15 +61,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\DashboardPage.xaml.cs">
-      <DependentUpon>DashboardPage.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiXaml Update="Views\DashboardPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Views\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
