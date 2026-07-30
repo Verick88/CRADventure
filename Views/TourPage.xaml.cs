@@ -15,6 +15,17 @@ public partial class TourPage : ContentPage
     {
         InitializeComponent();
         _usuarioActual = SesionService.UsuarioActual;
+
+        // Ocultar el botón si el usuario es cliente 
+        if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
+        {
+            btnAgregarTour.IsVisible = true;
+        }
+        else
+        {
+            btnAgregarTour.IsVisible = false;
+        }
+
         CargarTours();
     }
 
@@ -51,7 +62,7 @@ public partial class TourPage : ContentPage
         }
     }
 
-    private async void OnAgregarTourClicked(object sender, EventArgs e)
+    private async void AgregarTour(object sender, EventArgs e)
     {
         if (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin")
             await DisplayAlert("Próximamente", "Ir a Agregar Tour Page", "OK");

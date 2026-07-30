@@ -81,13 +81,14 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <ImageButton Source="editar.png" 
+        <ImageButton x:Name="btnAgregarTour"
+                     Source="editar.png" 
                      WidthRequest="70" 
                      HeightRequest="70"
                      HorizontalOptions="End" 
                      VerticalOptions="End"
                      Margin="30"
                      BackgroundColor="Transparent"
-                     Clicked="OnAgregarTourClicked" />
+                     Clicked="AgregarTour" />
     </Grid>
 </ContentPage>
