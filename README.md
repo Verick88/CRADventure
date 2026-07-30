@@ -7,5 +7,5 @@ También, tiene integrado un mapa interactivo para que los usuarios disfruten de
 
 
 <img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/3e76482c-423c-4898-9718-fa13eb3268f4" /> 
-<img width="335" height="570" alt="image" src="https://github.com/user-attachments/assets/90c37e46-a87c-4f5c-817c-012cd705ef94" />
+<img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/90c37e46-a87c-4f5c-817c-012cd705ef94" />
 
