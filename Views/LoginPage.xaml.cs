@@ -1,12 +1,12 @@
 using CRadventure;
 using CRadventure.Models;
 using CRadventure.Services;
-using CRADventure.Views;
+using CRadventure.Views;
 using Plugin.Firebase;
 using Plugin.Firebase.Auth;
 using Plugin.Firebase.Firestore;
 
-namespace CRADventure.Views;
+namespace CRadventure.Views;
 
 public partial class LoginPage : ContentPage
 {
@@ -59,14 +59,17 @@ public partial class LoginPage : ContentPage
             }
             else
             {
+                //Se guarda el usuario con el servicio de sesion
+                SesionService.UsuarioActual = usuario;
+
                 // Navegar según el rol
                 if (usuario.Rol == "admin" || usuario.Rol == "guia" || usuario.Rol == "cliente")
-                    await Navigation.PushAsync(new TourPage(usuario));
+                    await Shell.Current.GoToAsync("//TourPage");
                 else
                     await DisplayAlert("Error", "Rol no reconocido", "OK");
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             await DisplayAlert("Error Login", "Correo o contraseña incorrectos", "OK");
         }

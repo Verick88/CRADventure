@@ -1,19 +1,20 @@
+
 using CRadventure.Models;
 using CRadventure.Services;
 using Plugin.Firebase.Auth;
 using Plugin.Firebase.Firestore;
 
-namespace CRADventure.Views;
+namespace CRadventure.Views;
 
 public partial class TourPage : ContentPage
 {
     private readonly TourService _tourService = new TourService();
     private readonly UsuarioModel _usuarioActual;
 
-    public TourPage(UsuarioModel usuario)
+    public TourPage()
     {
         InitializeComponent();
-        _usuarioActual = usuario;
+        _usuarioActual = SesionService.UsuarioActual;
         CargarTours();
     }
 
