@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="CRADventure.Views.LoginPage"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <Image
+            Source="a3.png"
+            Aspect="AspectFill"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill" />
+
+        <BoxView HorizontalOptions="Fill" VerticalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30050A06" Offset="0.0" />
+                    <GradientStop Color="#CC09130B" Offset="0.5" />
+                    <GradientStop Color="#FA050A06" Offset="1.0" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView VerticalOptions="FillAndExpand">
+
+            <Grid VerticalOptions="CenterAndExpand" Padding="24,30,24,30">
+
+                <Border
+                    Padding="20,22,20,22"
+                    BackgroundColor="#C8070F0A"
+                    Stroke="#1EFFFFFF"
+                    StrokeThickness="1"
+                    HorizontalOptions="Center"
+                    WidthRequest="350">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20"/>
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="14">
+
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                            <Label
+                                Text="CRADVENTURE"
+                                FontFamily="MontserratBold"
+                                FontSize="24"
+                                TextColor="#93C94A"
+                                HorizontalOptions="Center"
+                                CharacterSpacing="5"
+                                HorizontalTextAlignment="Center">
+                                <Label.Shadow>
+                                    <Shadow Brush="Black" Offset="0,2" Radius="3" Opacity="0.5" />
+                                </Label.Shadow>
+                            </Label>
+
+                            <Label
+                                Text="Redescubre nuestro país"
+                                FontFamily="MontserratRegular"
+                                FontSize="12"
+                                TextColor="#ECEFF1"
+                                HorizontalOptions="Center"
+                                CharacterSpacing="1"
+                                HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+
+                        <BoxView
+                            HeightRequest="1"
+                            BackgroundColor="#10FFFFFF"
+                            HorizontalOptions="Fill"
+                            Margin="5,2,5,2"/>
+
+                        <VerticalStackLayout Spacing="2" Margin="0,0,0,5">
+                            <Label
+                                Text="Bienvenido"
+                                FontFamily="MontserratBold"
+                                HorizontalOptions="Center"
+                                FontSize="18"
+                                TextColor="White"/>
+                            <Label
+                                Text="Inicia sesión para continuar"
+                                FontFamily="MontserratRegular"
+                                FontSize="11"
+                                HorizontalOptions="Center"
+                                TextColor="#B0BEC5"
+                                HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+
+                        <Border
+                            Padding="12,0"
+                            HeightRequest="42"
+                            BackgroundColor="#15FFFFFF"
+                            Stroke="#20FFFFFF"
+                            StrokeThickness="1">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Entry
+                                x:Name="txtCorreo"
+                                Placeholder="Correo electrónico"
+                                PlaceholderColor="#78909C"
+                                TextColor="White"
+                                FontSize="13"
+                                Keyboard="Email"
+                                FontFamily="MontserratRegular"
+                                VerticalTextAlignment="Center"/>
+                        </Border>
+
+                        <Border
+                            Padding="12,0"
+                            HeightRequest="42"
+                            BackgroundColor="#15FFFFFF"
+                            Stroke="#20FFFFFF"
+                            StrokeThickness="1">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Entry
+                                    x:Name="txtPassword"
+                                    Grid.Column="0"
+                                    Placeholder="Contraseña"
+                                    IsPassword="True"
+                                    PlaceholderColor="#78909C"
+                                    TextColor="White"
+                                    FontSize="13"
+                                    FontFamily="MontserratRegular"
+                                    VerticalTextAlignment="Center"/>
+                                <Button
+                                    Grid.Column="1"
+                                    Text="👁️"
+                                    FontSize="16"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#93C94A"
+                                    WidthRequest="40"
+                                    Padding="0"
+                                    Clicked="OnTogglePassword_Clicked"/>
+                            </Grid>
+                        </Border>
+
+                        <Grid>
+                            <Button
+                                x:Name="btnIniciar"
+                                Text="Iniciar viaje"
+                                FontFamily="MontserratBold"
+                                FontSize="14"
+                                BackgroundColor="#93C94A"
+                                TextColor="#0A140E"
+                                HeightRequest="42"
+                                CornerRadius="8"
+                                Margin="0,4,0,0"
+                                Clicked="OnIniciarViaje_Clicked"/>
+                            <ActivityIndicator 
+                                x:Name="loadingIndicator" 
+                                IsRunning="False" 
+                                IsVisible="False" 
+                                Color="#0A140E" 
+                                VerticalOptions="Center" 
+                                HorizontalOptions="Center"/>
+                        </Grid>
+
+                        <Button
+                            Text="Crear cuenta"
+                            HeightRequest="40"
+                            CornerRadius="8"
+                            BackgroundColor="Transparent"
+                            BorderColor="#93C94A"
+                            BorderWidth="1"
+                            TextColor="#93C94A"
+                            FontFamily="MontserratBold"
+                            FontSize="12"
+                            Clicked="Registrar_Clicked"/>
+
+                        <Label
+                            Text="¿Olvidaste tu contraseña?"
+                            FontFamily="MontserratRegular"
+                            HorizontalOptions="Center"
+                            TextColor="#93C94A"
+                            FontSize="11"
+                            Margin="0,2,0,0"/>
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>
