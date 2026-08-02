@@ -15,7 +15,7 @@ public partial class LoginPage : ContentPage
         InitializeComponent();
     }
 
-    //Navega a la pagina de registro
+    // Navega a la pagina de registro
     private async void Registrar_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new RegisterPage());
@@ -26,7 +26,6 @@ public partial class LoginPage : ContentPage
     {
         txtPassword.IsPassword = !txtPassword.IsPassword;
     }
-
 
     // Método principal de inicio de sesión con UI de carga
     private async void OnIniciarViaje_Clicked(object sender, EventArgs e)
@@ -47,7 +46,13 @@ public partial class LoginPage : ContentPage
         try
         {
             var auth = CrossFirebaseAuth.Current;
-            var user = await auth.SignInWithEmailAndPasswordAsync(txtCorreo.Text, txtPassword.Text);
+            var user = await auth.SignInWithEmailAndPasswordAsync(txtCorreo.Text.Trim(), txtPassword.Text);
+
+            if (user == null)
+            {
+                await DisplayAlert("Error", "No se pudo autenticar el usuario", "OK");
+                return;
+            }
 
             // Obtener el rol del usuario desde Firestore
             var service = new UsuarioService();
@@ -55,23 +60,38 @@ public partial class LoginPage : ContentPage
 
             if (usuario == null)
             {
-                await DisplayAlert("Error", "Usuario no encontrado en la base de datos", "OK");
-            }
-            else
-            {
-                //Se guarda el usuario con el servicio de sesion
-                SesionService.UsuarioActual = usuario;
+                // Si el usuario existe en Auth pero no en Firestore, lo creamos automáticamente
+                usuario = new UsuarioModel
+                {
+                    Uid = user.Uid,
+                    Email = user.Email ?? txtCorreo.Text.Trim(),
+                    Nombre = "Usuario",
+                    Apellidos = "",
+                    Telefono = "",
+                    Rol = "cliente",
+                    Activo = true,
+                    FechaRegistro = DateTimeOffset.Now
+                };
 
-                // Navegar según el rol
-                if (usuario.Rol == "admin" || usuario.Rol == "guia" || usuario.Rol == "cliente")
-                    await Shell.Current.GoToAsync("//TourPage");
-                else
-                    await DisplayAlert("Error", "Rol no reconocido", "OK");
+                // Guardar el nuevo documento en Firestore usando su UID como ID de documento
+                await CrossFirebaseFirestore.Current
+                    .GetCollection("usuarios")
+                    .GetDocument(user.Uid)
+                    .SetDataAsync(usuario);
             }
+
+            // Se guarda el usuario con el servicio de sesion
+            SesionService.UsuarioActual = usuario;
+
+            // Navegar según el rol
+            if (usuario.Rol == "admin" || usuario.Rol == "guia" || usuario.Rol == "cliente")
+                await Shell.Current.GoToAsync("//TourPage");
+            else
+                await DisplayAlert("Error", "Rol no reconocido", "OK");
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error Login", "Correo o contraseña incorrectos", "OK");
+            await DisplayAlert("Error Técnico de Firebase", ex.Message, "OK");
         }
         finally
         {

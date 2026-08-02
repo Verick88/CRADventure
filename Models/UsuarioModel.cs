@@ -34,7 +34,7 @@ namespace CRadventure.Models
         public bool EsExtranjero { get; set; }
 
         [FirestoreProperty("fecha_registro")]
-        public DateTime FechaRegistro { get; set; }
+        public DateTimeOffset? FechaRegistro { get; set; }
 
         // Campos exclusivos del guia
         [FirestoreProperty("biografia")]

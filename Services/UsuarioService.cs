@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CRadventure.Models;
 using Plugin.Firebase.Firestore;
@@ -14,30 +11,55 @@ namespace CRadventure.Services
 
         public async Task GuardarUsuarioAsync(UsuarioModel usuario)
         {
-            await CrossFirebaseFirestore.Current
-                .GetCollection(ColeccionUsuarios)
-                .GetDocument(usuario.Uid)
-                .SetDataAsync(usuario);
+            try
+            {
+                await CrossFirebaseFirestore.Current
+                    .GetCollection(ColeccionUsuarios)
+                    .GetDocument(usuario.Uid)
+                    .SetDataAsync(usuario);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al guardar usuario: {ex.Message}");
+            }
         }
-
-        /*public async Task<UsuarioModel?> ObtenerUsuarioPorEmailAsync(string email)
-        {
-                 var documentos = await CrossFirebaseFirestore.Current
-                .GetCollection(ColeccionUsuarios)
-                .WhereEqualsTo("email", email)
-                .GetDocumentsAsync<UsuarioModel>();
-
-            return documentos.Documents.Select(d => d.Data).FirstOrDefault();
-        }*/
 
         public async Task<UsuarioModel?> ObtenerUsuarioPorUidAsync(string uid)
         {
-            var documento = await CrossFirebaseFirestore.Current
-                .GetCollection(ColeccionUsuarios)
-                .GetDocument(uid)
-                .GetDocumentSnapshotAsync<UsuarioModel>();
+            try
+            {
+                var docSnapshot = await CrossFirebaseFirestore.Current
+                    .GetCollection(ColeccionUsuarios)
+                    .GetDocument(uid)
+                    .GetDocumentSnapshotAsync<UsuarioModel>();
 
-            return documento?.Data;
+                var usuario = docSnapshot?.Data;
+
+                if (usuario == null)
+                {
+                    return null;
+                }
+
+                usuario.Uid = uid; // por si el campo Uid no viene guardado en el documento
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al obtener usuario: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task ActualizarPerfilAsync(string uid, string nombre, string apellidos, string telefono)
+        {
+            var usuario = await ObtenerUsuarioPorUidAsync(uid);
+            if (usuario == null) return;
+
+            usuario.Nombre = nombre;
+            usuario.Apellidos = apellidos;
+            usuario.Telefono = telefono;
+
+            await GuardarUsuarioAsync(usuario);
         }
     }
 }
