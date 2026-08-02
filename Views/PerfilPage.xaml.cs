@@ -43,6 +43,18 @@ public partial class PerfilPage : ContentPage
                     txtApellidos.Text = usuarioModel.Apellidos;
                     txtTelefono.Text = usuarioModel.Telefono;
                     lblEmail.Text = usuarioModel.Email; // por si tienes una etiqueta para mostrar el correo
+
+                    // Si tienes una propiedad de FotoUrl en tu modelo que almacena Base64 o URL, cargarla aquí
+                    // if (!string.IsNullOrEmpty(usuarioModel.FotoUrl))
+                    // {
+                    //     if (usuarioModel.FotoUrl.StartsWith("http"))
+                    //         imgPerfil.Source = ImageSource.FromUri(new Uri(usuarioModel.FotoUrl));
+                    //     else
+                    //     {
+                    //         byte[] imageBytes = Convert.FromBase64String(usuarioModel.FotoUrl);
+                    //         imgPerfil.Source = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+                    //     }
+                    // }
                 }
             }
         }
@@ -76,26 +88,68 @@ public partial class PerfilPage : ContentPage
         }
     }
 
-    // cerrar sesión desde el perfil
-private async void OnCerrarSesion_Clicked(object sender, EventArgs e)
-{
-    bool confirmar = await DisplayAlert("Cerrar Sesión", "¿Estás seguro de que deseas salir?", "Sí", "No");
-    if (confirmar)
+    // seleccionar, cambiar y guardar la foto en Firestore automáticamente
+    private async void OnCambiarFotoClicked(object sender, EventArgs e)
     {
         try
         {
-            await CrossFirebaseAuth.Current.SignOutAsync();
-            
-            // destruye el Shel
-            // Application.Current.MainPage = new NavigationPage(new LoginPage());
+            var result = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Selecciona una nueva foto de perfil",
+                FileTypes = FilePickerFileType.Images
+            });
 
-            // mantener el Shell vivo
-            await Shell.Current.GoToAsync("//LoginPage");
+            if (result != null)
+            {
+                var filePath = result.FullPath;
+
+                // mostrar en la UI de inmediato
+                imgPerfil.Source = ImageSource.FromFile(filePath);
+
+                // convertir la imagen a Base64 para guardarla permanentemente en Firestore
+                byte[] imageBytes;
+                using (var stream = await result.OpenReadAsync())
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await stream.CopyToAsync(memoryStream);
+                        imageBytes = memoryStream.ToArray();
+                    }
+                }
+                string base64Image = Convert.ToBase64String(imageBytes);
+
+                // obtener usuario actual y guardar en la base de datos
+                var usuarioAuth = CrossFirebaseAuth.Current.CurrentUser;
+                if (usuarioAuth != null)
+                {
+                    await _usuarioService.ActualizarFotoPerfilAsync(usuarioAuth.Uid, base64Image);
+                    await DisplayAlert("Éxito", "Foto de perfil actualizada y guardada correctamente.", "OK");
+                }
+            }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", "No se pudo cerrar sesión: " + ex.Message, "OK");
+            await DisplayAlert("Error", $"No se pudo actualizar la foto: {ex.Message}", "OK");
         }
     }
-}
+
+    // cerrar sesión desde el perfil
+    private async void OnCerrarSesion_Clicked(object sender, EventArgs e)
+    {
+        bool confirmar = await DisplayAlert("Cerrar Sesión", "¿Estás seguro de que deseas salir?", "Sí", "No");
+        if (confirmar)
+        {
+            try
+            {
+                await CrossFirebaseAuth.Current.SignOutAsync();
+
+                // mantener el Shell vivo
+                await Shell.Current.GoToAsync("//LoginPage");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "No se pudo cerrar sesión: " + ex.Message, "OK");
+            }
+        }
+    }
 }

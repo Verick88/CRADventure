@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using CRadventure.Models;
 using Plugin.Firebase.Firestore;
-using Plugin.Firebase.Auth; // Asegúrate de incluir este using
+using Plugin.Firebase.Auth;
 
 namespace CRadventure.Services
 {
@@ -63,7 +63,7 @@ namespace CRadventure.Services
             await GuardarUsuarioAsync(usuario);
         }
 
-        // Método agregado para la recuperación de contraseña
+        // Método para la recuperación de contraseña
         public async Task<bool> RecuperarPasswordAsync(string email)
         {
             try
@@ -75,6 +75,25 @@ namespace CRadventure.Services
             {
                 System.Diagnostics.Debug.WriteLine($"Error al enviar correo de recuperación: {ex.Message}");
                 return false;
+            }
+        }
+
+        // NUEVO: Método para actualizar únicamente la foto de perfil en Firestore
+        public async Task ActualizarFotoPerfilAsync(string uid, string fotoBase64)
+        {
+            try
+            {
+                var usuario = await ObtenerUsuarioPorUidAsync(uid);
+                if (usuario != null)
+                {
+                    usuario.FotoUrl = fotoBase64; // Asegúrate de que tu modelo tenga esta propiedad
+                    await GuardarUsuarioAsync(usuario);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al actualizar la foto: {ex.Message}");
+                throw;
             }
         }
     }

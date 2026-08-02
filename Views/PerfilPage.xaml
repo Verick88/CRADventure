@@ -24,6 +24,35 @@
                         VerticalOptions="Center"/>
             </Grid>
 
+            <!-- Sección de Foto de Perfil -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,0,0,10">
+                <Frame CornerRadius="60" 
+                       HeightRequest="120" 
+                       WidthRequest="120" 
+                       Padding="0" 
+                       IsClippedToBounds="True" 
+                       HorizontalOptions="Center"
+                       BorderColor="LightGray">
+                    <Image x:Name="imgPerfil" 
+                           Source="dotnet_bot.png" 
+                           Aspect="AspectFill"
+                           HeightRequest="120"
+                           WidthRequest="120"/>
+                </Frame>
+
+                <Button Text="Cambiar foto" 
+                        Clicked="OnCambiarFotoClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="#93C94A"
+                        BorderColor="#93C94A"
+                        BorderWidth="1"
+                        HeightRequest="40"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        CornerRadius="8"
+                        HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
             <!-- Correo (Solo lectura) -->
             <Label Text="Correo Electrónico:" FontAttributes="Bold"/>
             <Label x:Name="lblEmail" Text="cargando..." FontSize="16" TextColor="Gray"/>
@@ -43,9 +72,11 @@
             <!-- Botón Guardar -->
             <Button Text="Guardar Cambios"
                     Clicked="OnGuardarClicked"
-                    BackgroundColor="#512BD4"
-                    TextColor="White"
-                    Margin="0,20,0,0"/>
+                    BackgroundColor="#93C94A"
+                    TextColor="#0A140E"
+                    FontAttributes="Bold"
+                    Margin="0,20,0,0"
+                    CornerRadius="8"/>
 
         </VerticalStackLayout>
     </ScrollView>

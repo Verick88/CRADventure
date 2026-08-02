@@ -45,5 +45,9 @@ namespace CRadventure.Models
 
         [FirestoreProperty("verificado")]
         public bool Verificado { get; set; }
+
+        // Campo para la foto de perfil
+        [FirestoreProperty("foto_url")]
+        public string FotoUrl { get; set; } = string.Empty;
     }
 }
