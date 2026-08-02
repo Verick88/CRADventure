@@ -177,7 +177,11 @@
                             HorizontalOptions="Center"
                             TextColor="#93C94A"
                             FontSize="11"
-                            Margin="0,2,0,0"/>
+                            Margin="0,2,0,0">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnOlvidastePasswordTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
                     </VerticalStackLayout>
                 </Border>
 

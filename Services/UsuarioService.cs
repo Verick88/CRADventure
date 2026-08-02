@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CRadventure.Models;
 using Plugin.Firebase.Firestore;
+using Plugin.Firebase.Auth; // Asegúrate de incluir este using
 
 namespace CRadventure.Services
 {
@@ -60,6 +61,21 @@ namespace CRadventure.Services
             usuario.Telefono = telefono;
 
             await GuardarUsuarioAsync(usuario);
+        }
+
+        // Método agregado para la recuperación de contraseña
+        public async Task<bool> RecuperarPasswordAsync(string email)
+        {
+            try
+            {
+                await CrossFirebaseAuth.Current.SendPasswordResetEmailAsync(email);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al enviar correo de recuperación: {ex.Message}");
+                return false;
+            }
         }
     }
 }

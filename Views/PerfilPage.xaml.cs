@@ -65,7 +65,7 @@ public partial class PerfilPage : ContentPage
             string apellidos = txtApellidos.Text;
             string telefono = txtTelefono.Text;
 
-            // Llamamos al servicio para actualizar los datos en Firestore
+            // llamamos al servicio para actualizar los datos en Firestore
             await _usuarioService.ActualizarPerfilAsync(uid, nombre, apellidos, telefono);
 
             await DisplayAlert("Éxito", "Perfil actualizado correctamente", "OK");
@@ -76,7 +76,7 @@ public partial class PerfilPage : ContentPage
         }
     }
 
-    // --- NUEVO: Evento para cerrar sesión desde el perfil ---
+    // cerrar sesión desde el perfil
 private async void OnCerrarSesion_Clicked(object sender, EventArgs e)
 {
     bool confirmar = await DisplayAlert("Cerrar Sesión", "¿Estás seguro de que deseas salir?", "Sí", "No");
@@ -86,10 +86,10 @@ private async void OnCerrarSesion_Clicked(object sender, EventArgs e)
         {
             await CrossFirebaseAuth.Current.SignOutAsync();
             
-            // NUNCA ESTO porque destruye el Shell:
+            // destruye el Shel
             // Application.Current.MainPage = new NavigationPage(new LoginPage());
 
-            // ESTO en su lugar para mantener el Shell vivo
+            // mantener el Shell vivo
             await Shell.Current.GoToAsync("//LoginPage");
         }
         catch (Exception ex)

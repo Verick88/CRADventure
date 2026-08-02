@@ -102,4 +102,25 @@ public partial class LoginPage : ContentPage
             btnIniciar.IsEnabled = true;
         }
     }
+
+    // Método para recuperar contraseña
+    private async void OnOlvidastePasswordTapped(object sender, EventArgs e)
+    {
+        string email = await DisplayPromptAsync("Recuperar Contraseña", "Ingresa tu correo electrónico registrado:", "Enviar", "Cancelar", keyboard: Keyboard.Email);
+
+        if (!string.IsNullOrWhiteSpace(email))
+        {
+            var usuarioService = new UsuarioService();
+            bool enviado = await usuarioService.RecuperarPasswordAsync(email.Trim());
+
+            if (enviado)
+            {
+                await DisplayAlert("Éxito", "Se ha enviado un correo para restablecer tu contraseña.", "OK");
+            }
+            else
+            {
+                await DisplayAlert("Error", "No se pudo enviar el correo. Verifica que esté bien escrito o registrado.", "OK");
+            }
+        }
+    }
 }
