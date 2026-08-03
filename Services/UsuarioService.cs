@@ -78,7 +78,7 @@ namespace CRadventure.Services
             }
         }
 
-        // NUEVO: Método para actualizar únicamente la foto de perfil en Firestore
+        //  Método para actualizar únicamente la foto de perfil en Firestore
         public async Task ActualizarFotoPerfilAsync(string uid, string fotoBase64)
         {
             try

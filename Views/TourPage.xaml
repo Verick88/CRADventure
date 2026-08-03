@@ -15,7 +15,9 @@
         <CollectionView x:Name="cvTours" 
                         Margin="15"
                         VerticalOptions="Fill"
-                        HorizontalOptions="Fill">
+                        HorizontalOptions="Fill"
+                        SelectionMode="Single"
+                        SelectionChanged="ClickTour">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Margin="0,10" 

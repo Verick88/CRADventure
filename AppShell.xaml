@@ -12,6 +12,7 @@
         Title="Home"
         ContentTemplate="{DataTemplate local:LoginPage}"
         Route="LoginPage" />
+    
 
     <!-- Pestañas -->
     <TabBar>
@@ -27,5 +28,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:PerfilPage}" />
         </Tab>
     </TabBar>
+
+    
 
 </Shell>

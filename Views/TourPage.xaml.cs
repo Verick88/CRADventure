@@ -66,17 +66,13 @@ public partial class TourPage : ContentPage
     private async void AgregarTour(object sender, EventArgs e)
     {
         if (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin")
-            await DisplayAlert("Próximamente", "Ir a Agregar Tour Page", "OK");
+            await DisplayAlert("Próximamente", "AgregarTourPage", "OK");
         else
             await DisplayAlert("Acceso", "Solo los guías pueden agregar tours", "OK");
     }
 
-    private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private async void ClickTour(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is TourModel tourSeleccionado)
-        {
-            await DisplayAlert("Próximamente", "Ir a Tour Detalle Page", "OK");
-            cvTours.SelectedItem = null;
-        }
+        await Shell.Current.GoToAsync(nameof(ReservaPage));
     }
 }
