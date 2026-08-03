@@ -53,7 +53,10 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
-    <PackageReference Include="Microsoft.Maui.Maps" Version="8.0.100" />
+	  
+    <PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.111" />
+    
+	
 
     <PackageReference Include="Plugin.Firebase.Auth" Version="5.0.1" />
     <PackageReference Include="Plugin.Firebase.Core" Version="4.2.0" />
