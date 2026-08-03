@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
+using Microsoft.Maui.Maps;
 
 namespace CRadventure
 {
@@ -10,6 +13,7 @@ namespace CRadventure
 
             builder
                  .UseMauiApp<App>()
+                 .UseMauiMaps()
                  .ConfigureFonts(fonts =>
                  {
                      fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

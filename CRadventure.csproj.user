@@ -3,7 +3,7 @@
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <ActiveDebugFramework>net9.0-android</ActiveDebugFramework>
-    <ActiveDebugProfile>Samsung SM-A566E (Android 16.0 - API 36)</ActiveDebugProfile>
+    <ActiveDebugProfile>Samsung SM-A356E (Android 14.0 - API 34)</ActiveDebugProfile>
     <SelectedPlatformGroup>PhysicalDevice</SelectedPlatformGroup>
     <SelectedDevice>Emulador para Android</SelectedDevice>
     <DefaultDevice>pixel_5_-_api_33</DefaultDevice>
