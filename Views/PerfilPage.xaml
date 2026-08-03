@@ -7,7 +7,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
-            <!-- Encabezado con Título y Cerrar Sesión -->
+            <!-- Título y boton Cerrar Sesión -->
             <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,10">
                 <Label Text="Configuración de Perfil"
                        FontSize="22"
@@ -24,7 +24,7 @@
                         VerticalOptions="Center"/>
             </Grid>
 
-            <!-- Sección de Foto de Perfil -->
+            <!-- Foto de Perfil -->
             <VerticalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,0,0,10">
                 <Frame CornerRadius="60" 
                        HeightRequest="120" 
@@ -53,7 +53,7 @@
                         HorizontalOptions="Center"/>
             </VerticalStackLayout>
 
-            <!-- Correo (Solo lectura) -->
+            <!-- Correo -->
             <Label Text="Correo Electrónico:" FontAttributes="Bold"/>
             <Label x:Name="lblEmail" Text="cargando..." FontSize="16" TextColor="Gray"/>
 
@@ -65,11 +65,11 @@
             <Label Text="Apellidos:" FontAttributes="Bold"/>
             <Entry x:Name="txtApellidos" Placeholder="Ingresa tus apellidos"/>
 
-            <!-- Teléfono -->
+            <!-- Telefono -->
             <Label Text="Teléfono:" FontAttributes="Bold"/>
             <Entry x:Name="txtTelefono" Placeholder="Ingresa tu teléfono" Keyboard="Telephone"/>
 
-            <!-- Botón Guardar -->
+            <!-- Boton Guardar -->
             <Button Text="Guardar Cambios"
                     Clicked="OnGuardarClicked"
                     BackgroundColor="#93C94A"

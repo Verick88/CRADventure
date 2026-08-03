@@ -29,6 +29,7 @@ public partial class TourPage : ContentPage
         CargarTours();
     }
 
+    //Metodo para cargar los tours desde firebase
     private async void CargarTours()
     {
         try

@@ -7,12 +7,14 @@
     Shell.NavBarIsVisible="False">
 
     <Grid>
+        <!-- Imagen de fondo que cubre toda la pantalla -->
         <Image
             Source="a3.png"
             Aspect="AspectFill"
             HorizontalOptions="Fill"
             VerticalOptions="Fill" />
-
+        
+        <!-- Capa de degradadi oscuro sobre la imagen para mejorar el contraste de los textos-->
         <BoxView HorizontalOptions="Fill" VerticalOptions="Fill">
             <BoxView.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -22,11 +24,14 @@
                 </LinearGradientBrush>
             </BoxView.Background>
         </BoxView>
-
+        
+        <!-- Contenedor con desplazamiento vertical para evitar problemas con el teclado-->
         <ScrollView VerticalOptions="FillAndExpand">
-
+            
+            <!-- Contenedor para centrar la tarjeta de inicio de sesion-->
             <Grid VerticalOptions="CenterAndExpand" Padding="24,30,24,30">
 
+                <!-- Tarjeta contenedora principal con bordes redondeados y fondo semitransparente -->
                 <Border
                     Padding="20,22,20,22"
                     BackgroundColor="#C8070F0A"
@@ -39,7 +44,8 @@
                     </Border.StrokeShape>
 
                     <VerticalStackLayout Spacing="14">
-
+                        
+                        <!-- Sección de Título y Subtítulo de la App -->
                         <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
                             <Label
                                 Text="CRADVENTURE"
@@ -63,13 +69,15 @@
                                 CharacterSpacing="1"
                                 HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
-
+                        
+                        <!-- Línea divisoria decorativa -->
                         <BoxView
                             HeightRequest="1"
                             BackgroundColor="#10FFFFFF"
                             HorizontalOptions="Fill"
                             Margin="5,2,5,2"/>
 
+                        <!-- Sección de Bienvenida al usuario -->
                         <VerticalStackLayout Spacing="2" Margin="0,0,0,5">
                             <Label
                                 Text="Bienvenido"
@@ -86,6 +94,7 @@
                                 HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
 
+                        <!-- Campo de entrada para el Correo Electrónico -->
                         <Border
                             Padding="12,0"
                             HeightRequest="42"
@@ -106,6 +115,7 @@
                                 VerticalTextAlignment="Center"/>
                         </Border>
 
+                        <!-- Campo de entrada para la Contraseña con botón integrado para ver/ocultar -->
                         <Border
                             Padding="12,0"
                             HeightRequest="42"
@@ -138,6 +148,7 @@
                             </Grid>
                         </Border>
 
+                        <!-- Botón principal de Iniciar Sesión y su indicador de carga -->
                         <Grid>
                             <Button
                                 x:Name="btnIniciar"
@@ -158,7 +169,8 @@
                                 VerticalOptions="Center" 
                                 HorizontalOptions="Center"/>
                         </Grid>
-
+                        
+                        <!-- Botón para redirigir al registro de cuentas nuevas -->
                         <Button
                             Text="Crear cuenta"
                             HeightRequest="40"
@@ -171,6 +183,7 @@
                             FontSize="12"
                             Clicked="Registrar_Clicked"/>
 
+                        <!-- Enlace de texto para recuperar la contraseña en caso de olvido -->
                         <Label
                             Text="¿Olvidaste tu contraseña?"
                             FontFamily="MontserratRegular"
