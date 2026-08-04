@@ -4,80 +4,161 @@
              x:Class="CRadventure.Views.PerfilPage"
              Title="Mi Perfil">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+    <Grid>
+        <!-- Imagen de fondo -->
+        <Image
+            Source="perfil_fondo.png"
+            Aspect="AspectFill"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill" />
 
-            <!-- Título y boton Cerrar Sesión -->
-            <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,10">
-                <Label Text="Configuración de Perfil"
-                       FontSize="22"
-                       FontAttributes="Bold"
-                       VerticalOptions="Center"/>
+        <!-- Capa de degradado oscuro -->
+        <BoxView HorizontalOptions="Fill" VerticalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30050A06" Offset="0.0" />
+                    <GradientStop Color="#CC09130B" Offset="0.5" />
+                    <GradientStop Color="#FA050A06" Offset="1.0" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
 
-                <Button Grid.Column="1"
-                        Text="Cerrar Sesión"
-                        Clicked="OnCerrarSesion_Clicked"
-                        BackgroundColor="#EF4444"
-                        TextColor="White"
-                        FontSize="12"
-                        HeightRequest="38"
-                        VerticalOptions="Center"/>
+        <!-- Contenedor con desplazamiento vertical -->
+        <ScrollView VerticalOptions="FillAndExpand">
+
+            <Grid VerticalOptions="CenterAndExpand" Padding="20,25,20,25">
+
+                <!-- Tarjeta contenedora principal -->
+                <Border
+                    Padding="20,22,20,22"
+                    BackgroundColor="#C8070F0A"
+                    Stroke="#1EFFFFFF"
+                    StrokeThickness="1"
+                    HorizontalOptions="Center"
+                    WidthRequest="350">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20"/>
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="14">
+
+                        <!-- Título y botón Cerrar Sesión -->
+                        <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,5">
+                            <Label Text="Mi Perfil"
+                                   FontFamily="MontserratBold"
+                                   FontSize="20"
+                                   TextColor="White"
+                                   VerticalOptions="Center"/>
+
+                            <Button Grid.Column="1"
+                                    Text="Cerrar Sesión"
+                                    Clicked="OnCerrarSesion_Clicked"
+                                    BackgroundColor="#EF4444"
+                                    TextColor="White"
+                                    FontSize="11"
+                                    FontFamily="MontserratBold"
+                                    HeightRequest="34"
+                                    CornerRadius="6"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView
+                            HeightRequest="1"
+                            BackgroundColor="#10FFFFFF"
+                            HorizontalOptions="Fill"
+                            Margin="0,0,0,5"/>
+
+                        <!-- Foto de Perfil -->
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,0,0,5">
+                            <Border HeightRequest="110" 
+                                    WidthRequest="110" 
+                                    Padding="0" 
+                                    Stroke="#93C94A"
+                                    StrokeThickness="2"
+                                    HorizontalOptions="Center"
+                                    BackgroundColor="Transparent">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="55"/>
+                                </Border.StrokeShape>
+                                <Image x:Name="imgPerfil" 
+                                        Source="img_perfil.png" 
+                                        Aspect="AspectFill"
+                                        HeightRequest="110"
+                                        WidthRequest="110"/>
+                            </Border>
+
+                            <Button Text="Cambiar foto" 
+                                    Clicked="OnCambiarFotoClicked"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#93C94A"
+                                    BorderColor="#93C94A"
+                                    BorderWidth="1"
+                                    HeightRequest="36"
+                                    FontSize="11"
+                                    FontFamily="MontserratBold"
+                                    CornerRadius="8"
+                                    HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+
+                        <!-- Correo Electrónico (Solo lectura informativo) -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Correo electrónico" FontFamily="MontserratRegular" FontSize="11" TextColor="#B0BEC5"/>
+                            <Border Padding="12,0" HeightRequest="40" BackgroundColor="#10FFFFFF" Stroke="#15FFFFFF" StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Label x:Name="lblEmail" Text="cargando..." FontSize="13" TextColor="#CFD8DC" FontFamily="MontserratRegular" VerticalTextAlignment="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Nombre -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Nombre" FontFamily="MontserratRegular" FontSize="11" TextColor="#B0BEC5"/>
+                            <Border Padding="12,0" HeightRequest="40" BackgroundColor="#15FFFFFF" Stroke="#20FFFFFF" StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="txtNombre" Placeholder="Ingresa tu nombre" PlaceholderColor="#78909C" TextColor="White" FontSize="13" FontFamily="MontserratRegular" VerticalTextAlignment="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Apellidos -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Apellidos" FontFamily="MontserratRegular" FontSize="11" TextColor="#B0BEC5"/>
+                            <Border Padding="12,0" HeightRequest="40" BackgroundColor="#15FFFFFF" Stroke="#20FFFFFF" StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="txtApellidos" Placeholder="Ingresa tus apellidos" PlaceholderColor="#78909C" TextColor="White" FontSize="13" FontFamily="MontserratRegular" VerticalTextAlignment="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Teléfono -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Teléfono" FontFamily="MontserratRegular" FontSize="11" TextColor="#B0BEC5"/>
+                            <Border Padding="12,0" HeightRequest="40" BackgroundColor="#15FFFFFF" Stroke="#20FFFFFF" StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="txtTelefono" Placeholder="Ingresa tu teléfono" Keyboard="Telephone" PlaceholderColor="#78909C" TextColor="White" FontSize="13" FontFamily="MontserratRegular" VerticalTextAlignment="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- Botón Guardar Cambios -->
+                        <Button Text="Guardar Cambios"
+                                Clicked="OnGuardarClicked"
+                                BackgroundColor="#93C94A"
+                                TextColor="#0A140E"
+                                FontFamily="MontserratBold"
+                                FontSize="13"
+                                HeightRequest="42"
+                                Margin="0,6,0,0"
+                                CornerRadius="8"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
             </Grid>
-
-            <!-- Foto de Perfil -->
-            <VerticalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,0,0,10">
-                <Frame CornerRadius="60" 
-                       HeightRequest="120" 
-                       WidthRequest="120" 
-                       Padding="0" 
-                       IsClippedToBounds="True" 
-                       HorizontalOptions="Center"
-                       BorderColor="LightGray">
-                    <Image x:Name="imgPerfil" 
-                           Source="dotnet_bot.png" 
-                           Aspect="AspectFill"
-                           HeightRequest="120"
-                           WidthRequest="120"/>
-                </Frame>
-
-                <Button Text="Cambiar foto" 
-                        Clicked="OnCambiarFotoClicked"
-                        BackgroundColor="Transparent"
-                        TextColor="#93C94A"
-                        BorderColor="#93C94A"
-                        BorderWidth="1"
-                        HeightRequest="40"
-                        FontSize="12"
-                        FontAttributes="Bold"
-                        CornerRadius="8"
-                        HorizontalOptions="Center"/>
-            </VerticalStackLayout>
-
-            <!-- Correo -->
-            <Label Text="Correo Electrónico:" FontAttributes="Bold"/>
-            <Label x:Name="lblEmail" Text="cargando..." FontSize="16" TextColor="Gray"/>
-
-            <!-- Nombre -->
-            <Label Text="Nombre:" FontAttributes="Bold"/>
-            <Entry x:Name="txtNombre" Placeholder="Ingresa tu nombre"/>
-
-            <!-- Apellidos -->
-            <Label Text="Apellidos:" FontAttributes="Bold"/>
-            <Entry x:Name="txtApellidos" Placeholder="Ingresa tus apellidos"/>
-
-            <!-- Telefono -->
-            <Label Text="Teléfono:" FontAttributes="Bold"/>
-            <Entry x:Name="txtTelefono" Placeholder="Ingresa tu teléfono" Keyboard="Telephone"/>
-
-            <!-- Boton Guardar -->
-            <Button Text="Guardar Cambios"
-                    Clicked="OnGuardarClicked"
-                    BackgroundColor="#93C94A"
-                    TextColor="#0A140E"
-                    FontAttributes="Bold"
-                    Margin="0,20,0,0"
-                    CornerRadius="8"/>
-
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>
