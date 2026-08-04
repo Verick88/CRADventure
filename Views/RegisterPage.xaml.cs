@@ -12,9 +12,30 @@ public partial class RegisterPage : ContentPage
 	}
 
     // --- Métodos de visibilidad de contraseña ---
-    private void OnTogglePassword_Clicked(object sender, EventArgs e) => txtPassword.IsPassword = !txtPassword.IsPassword;
-    private void OnToggleConfirmPassword_Clicked(object sender, EventArgs e) => txtConfirmPassword.IsPassword = !txtConfirmPassword.IsPassword;
-
+    private void OnTogglePassword_Clicked(object sender, EventArgs e)
+    {
+        txtPassword.IsPassword = !txtPassword.IsPassword;
+        if (txtPassword.IsPassword)
+        {
+            btnOjoPassword.Source = "ocultar.png";
+        }
+        else
+        {
+            btnOjoPassword.Source = "ver.png";
+        }
+    }
+    private void OnToggleConfirmPassword_Clicked(object sender, EventArgs e)
+    {
+        txtConfirmPassword.IsPassword = !txtConfirmPassword.IsPassword;
+        if (txtConfirmPassword.IsPassword)
+        {
+            btnOjoConfirmPassword.Source = "ocultar.png";
+        }
+        else
+        {
+            btnOjoConfirmPassword.Source = "ver.png";
+        }
+    }
     //Boton regresar
     private async void OnVolver_Clicked(object sender, EventArgs e)
     {

@@ -25,6 +25,15 @@ public partial class LoginPage : ContentPage
     private void OnTogglePassword_Clicked(object sender, EventArgs e)
     {
         txtPassword.IsPassword = !txtPassword.IsPassword;
+
+        if (txtPassword.IsPassword)
+        {
+            btnOjo.Source = "ver.png";
+        }
+        else
+        {
+            btnOjo.Source = "ocultar.png";
+        }
     }
 
     // Método principal de inicio de sesión con UI de carga

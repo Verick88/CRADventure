@@ -192,13 +192,19 @@
                                     FontSize="13" 
                                     FontFamily="MontserratRegular" 
                                     VerticalTextAlignment="Center"/>
-                                <Button 
-                                    Grid.Column="1" 
-                                    Text="👁️" 
-                                    BackgroundColor="Transparent" 
-                                    TextColor="#93C94A" 
-                                    Clicked="OnTogglePassword_Clicked" 
-                                    Padding="0"/>
+
+                                <!-- Boton ojo para password -->
+                                <Grid Grid.Column="1" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,5,0">
+                                    <ImageButton 
+                                        x:Name="btnOjoPassword"
+                                        Source="ocultar.png" 
+                                        BackgroundColor="Transparent" 
+                                        Padding="0"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Clicked="OnTogglePassword_Clicked"/>
+                                </Grid>
                             </Grid>
                         </Border>
 
@@ -223,13 +229,19 @@
                                     FontSize="13" 
                                     FontFamily="MontserratRegular" 
                                     VerticalTextAlignment="Center"/>
-                                <Button 
-                                    Grid.Column="1" 
-                                    Text="👁️" 
-                                    BackgroundColor="Transparent" 
-                                    TextColor="#93C94A" 
-                                    Clicked="OnToggleConfirmPassword_Clicked" 
-                                    Padding="0"/>
+                                
+                                <!-- Boton ojo para confirmar password -->
+                                <Grid Grid.Column="1" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,5,0">
+                                    <ImageButton 
+                                        x:Name="btnOjoConfirmPassword"
+                                        Source="ocultar.png" 
+                                        BackgroundColor="Transparent" 
+                                        Padding="0"
+                                        Aspect="AspectFit"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        Clicked="OnToggleConfirmPassword_Clicked"/>
+                                </Grid>
                             </Grid>
                         </Border>
 
