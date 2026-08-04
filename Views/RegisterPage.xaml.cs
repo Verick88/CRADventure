@@ -104,8 +104,10 @@ public partial class RegisterPage : ContentPage
             var service = new UsuarioService();
             await service.GuardarUsuarioAsync(nuevoUsuario);
 
+            SesionService.UsuarioActual = nuevoUsuario;
+
             await DisplayAlert("Éxito", "Cuenta creada correctamente", "OK");
-            await Navigation.PopAsync();
+            await Shell.Current.GoToAsync("//TourPage");
         }
         catch (Exception ex)
         {

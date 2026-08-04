@@ -22,30 +22,71 @@
                 <DataTemplate>
                     <Border Margin="0,10" 
                             BackgroundColor="#1C2520" 
-                            HeightRequest="380" 
                             WidthRequest="350"
-                            Stroke="#20FFFFFF"
+                            Stroke="#33FFFFFF"
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 20">
 
-                        <VerticalStackLayout>
+                        <VerticalStackLayout Spacing="0">
+
+                            <!-- 1. IMAGEN Y ELEMENTOS FLOTANTES -->
                             <Grid HeightRequest="200">
                                 <Image Source="{Binding ImagenUrl}" 
                                        Aspect="AspectFill" 
-                                       WidthRequest="350"/>
+                                       HeightRequest="200"
+                                       HorizontalOptions="Fill"/>
 
-                                <Label Text="NEW!" 
-                                       BackgroundColor="#93C94A" 
-                                       TextColor="Black" 
-                                       Padding="8,2" 
-                                       Margin="12" 
-                                       FontAttributes="Bold" 
-                                       FontSize="10"
-                                       HorizontalOptions="Start" 
-                                       VerticalOptions="Start"/>
+                                <!-- ETIQUETA DE DIFICULTAD (Arriba a la derecha con esquinas redondeadas) -->
+                                <Border Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="10,4"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        Margin="12"
+                                        BackgroundColor="#7F8C8D">
+                                    <!-- Color gris neutro por defecto si no hace match -->
+
+                                    <Label Text="{Binding Dificultad}"
+                                           TextColor="White"
+                                           FontAttributes="Bold"
+                                           FontSize="11"/>
+
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding Dificultad}" Value="Fácil">
+                                            <Setter Property="BackgroundColor" Value="#27AE60" />
+                                            <!-- Verde -->
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Border" Binding="{Binding Dificultad}" Value="Media">
+                                            <Setter Property="BackgroundColor" Value="#F39C12" />
+                                            <!-- Amarillo/Naranja -->
+                                        </DataTrigger>
+
+                                        <DataTrigger TargetType="Border" Binding="{Binding Dificultad}" Value="Alta">
+                                            <Setter Property="BackgroundColor" Value="#C0392B" />
+                                            <!-- Rojo -->
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                </Border>
+
+                                <!-- ETIQUETA DE PROVINCIA (Abajo a la derecha con fondo oscuro elegante) -->
+                                <Border Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8,4"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="End"
+                                        Margin="12"
+                                        BackgroundColor="#99000000">
+                                    <Label Text="{Binding Provincia}"
+                                           TextColor="White"
+                                           FontAttributes="Bold"
+                                           FontSize="12"/>
+                                </Border>
                             </Grid>
 
+                            <!-- 2. CONTENIDO DE TEXTO -->
                             <VerticalStackLayout Padding="15" Spacing="6">
+
                                 <Label Text="{Binding NombreLugar}" 
                                        TextColor="White" 
                                        FontSize="18" 
@@ -60,22 +101,42 @@
                                        FontSize="12" 
                                        FontAttributes="Italic"/>
 
+                                <!-- Fecha y Hora del Tour -->
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label Text="📅" FontSize="12" VerticalOptions="Center"/>
+                                    <Label Text="{Binding FechaHoraVisual}" 
+                                           TextColor="#4DB6AC" 
+                                           FontSize="13" 
+                                           FontAttributes="Bold"/>
+                                </HorizontalStackLayout>
+
                                 <Label Text="{Binding DescripcionCorta}" 
                                        TextColor="#B0BEC5" 
                                        FontSize="12"
                                        MaxLines="2"
                                        LineBreakMode="TailTruncation"/>
 
-                                <HorizontalStackLayout Spacing="10" Margin="0,5,0,0">
-                                    <Label Text="{Binding PrecioVisual}" 
-                                           TextColor="#93C94A" 
-                                           FontSize="16" 
-                                           FontAttributes="Bold"/>
-                                    <Label Text="{Binding DuracionMinutos, StringFormat='{0} min'}" 
-                                           TextColor="#78909C" 
-                                           FontSize="14" 
-                                           VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
+                                <!-- Precio (Izquierda) y Duración en Horas (Derecha) -->
+                                <Grid ColumnDefinitions="*, Auto" Margin="0,6,0,0">
+
+                                    <!-- Precio a la izquierda -->
+                                    <Label Grid.Column="0"
+           Text="{Binding PrecioVisual}" 
+           TextColor="#93C94A" 
+           FontSize="16" 
+           FontAttributes="Bold"
+           HorizontalOptions="Start"/>
+
+                                    <!-- Duración a la derecha del todo -->
+                                    <Label Grid.Column="1"
+           Text="{Binding DuracionVisual}" 
+           TextColor="#CFD8DC" 
+           FontSize="13" 
+           VerticalOptions="Center"
+           HorizontalOptions="End"/>
+
+                                </Grid>
+
                             </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Border>

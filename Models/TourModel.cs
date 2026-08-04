@@ -28,12 +28,22 @@ namespace CRadventure.Models
         [FirestoreProperty("precioExtranjero")]
         public double PrecioExtranjero { get; set; }
 
-        [FirestoreProperty("duracionMinutos")]
-        public int DuracionMinutos { get; set; }
+        [FirestoreProperty("duracionHoras")]
+        public int DuracionHoras { get; set; }
+
+        
+
+        [FirestoreProperty("provincia")]
+        public string Provincia { get; set; } = string.Empty;
+
+        [FirestoreProperty("dificultad")]
+        public string Dificultad { get; set; } = string.Empty;
 
         [FirestoreProperty("idiomas")]
         public string Idiomas { get; set; } = string.Empty;
 
+        [FirestoreProperty("fechaTour")]
+        public string FechaHoraVisual { get; set; } = "Fecha por definir";
         public string PrecioVisual { get; set; } = string.Empty;
 
         public void AplicarTarifa(bool esExtranjero)
@@ -47,5 +57,10 @@ namespace CRadventure.Models
         public string IdiomasTexto { get; set; } = string.Empty;
         public double Calificacion { get; set; } = 4.5; // Valor estático PRUEBA
 
+        public string DuracionVisual => $"{DuracionHoras} hrs";
+        private DateTime _fechaTour;
+
+        
+        
     }
 }

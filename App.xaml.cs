@@ -1,4 +1,8 @@
-﻿namespace CRadventure;
+﻿using CRadventure.Services;
+using CRadventure.Views;
+using Plugin.Firebase.Auth;
+
+namespace CRadventure;
 
 public partial class App : Application
 {
@@ -11,4 +15,5 @@ public partial class App : Application
     {
         return new Window(new AppShell());
     }
+
 }
