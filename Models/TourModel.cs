@@ -8,7 +8,7 @@ using Plugin.Firebase.Firestore;
 
 namespace CRadventure.Models
 {
-    class TourModel
+    public class TourModel
     {
         [FirestoreDocumentId]
         public string Id { get; set; } = string.Empty;

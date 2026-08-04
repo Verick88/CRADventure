@@ -3,6 +3,7 @@ using CRadventure.Models;
 using CRadventure.Services;
 using Plugin.Firebase.Auth;
 using Plugin.Firebase.Firestore;
+using System.Collections.ObjectModel;
 
 namespace CRadventure.Views;
 
@@ -11,10 +12,29 @@ public partial class TourPage : ContentPage
     private readonly TourService _tourService = new TourService();
     private readonly UsuarioModel _usuarioActual;
 
+    // Lista original completa que traemos de Firebase
+    private List<TourModel> _listaToursCompleta = new();
+
+    // Colección observable enlazada a tu CollectionView en el XAML
+    public ObservableCollection<TourModel> ToursFiltrados { get; set; } = new();
+
+    // Propiedad para la barra de búsqueda enlazada al SearchBar
+    private string _textoBusqueda;
+    public string TextoBusqueda
+    {
+        get => _textoBusqueda;
+        set
+        {
+            _textoBusqueda = value;
+            OnPropertyChanged();
+            FiltrarTours(); // Método que crearemos en el siguiente paso
+        }
+    }
     public TourPage()
     {
         InitializeComponent();
         _usuarioActual = SesionService.UsuarioActual;
+        BindingContext = this;
 
         // Ocultar el botón si el usuario es cliente 
         if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
@@ -29,6 +49,10 @@ public partial class TourPage : ContentPage
         CargarTours();
     }
 
+    private string _filtroProvinciaSeleccionada;
+    private string _filtroDificultadSeleccionada;
+    private string _filtroFechaSeleccionada;
+
     //Metodo para cargar los tours desde firebase
     private async void CargarTours()
     {
@@ -37,12 +61,15 @@ public partial class TourPage : ContentPage
             // Se obtiene la lista de tours desde TourService
             var listaTours = await _tourService.ObtenerTodosLosToursAsync();
 
+            _listaToursCompleta.Clear();
+            ToursFiltrados.Clear();
+
             foreach (var tour in listaTours)
             {
-                // Logica de los precios
+                // Lógica de los precios
                 tour.AplicarTarifa(_usuarioActual.EsExtranjero);
 
-                // Valida que idiomas no este vacio
+                // Valida que idiomas no esté vacío
                 if (!string.IsNullOrEmpty(tour.Idiomas))
                 {
                     tour.IdiomasTexto = tour.Idiomas;
@@ -51,14 +78,15 @@ public partial class TourPage : ContentPage
                 {
                     tour.IdiomasTexto = "Sin idioma";
                 }
-            }
 
-            // Se asigna la lista a la vista despues de haber procesado los idiomas
-            this.cvTours.ItemsSource = listaTours;
+                // Guardamos en ambas listas
+                _listaToursCompleta.Add(tour);
+                ToursFiltrados.Add(tour);
+            }
         }
         catch (Exception ex)
         {
-            // Error si no carga la informacion
+            // Error si no carga la información
             await DisplayAlert("Error", $"No se pudo cargar la información: {ex.Message}", "OK");
         }
     }
@@ -74,5 +102,82 @@ public partial class TourPage : ContentPage
     private async void ClickTour(object sender, SelectionChangedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(ReservaPage));
+    }
+
+    // Método que se ejecuta al presionar el botón de la imagen de filtros
+    private async void AbrirFiltros(object sender, EventArgs e)
+    {
+        string accion = await Shell.Current.DisplayActionSheet(
+            "Filtrar tours por:",
+            "Cancelar",
+            null,
+            " Provincia",
+            " Dificultad",
+            " Limpiar todos los filtros");
+
+        if (accion == " Provincia")
+        {
+            string provincia = await Shell.Current.DisplayActionSheet(
+                "Selecciona la provincia:", "Cancelar", null, "Puntarenas", "San José", "Alajuela", "Cartago", "Heredia", "Guanacaste", "Limón");
+
+            if (provincia != "Cancelar" && provincia != null)
+            {
+                _filtroProvinciaSeleccionada = provincia;
+                FiltrarTours();
+            }
+        }
+        else if (accion == " Dificultad")
+        {
+            string dificultad = await Shell.Current.DisplayActionSheet(
+                "Selecciona la dificultad:", "Cancelar", null, "Fácil", "Media", "Alta");
+
+            if (dificultad != "Cancelar" && dificultad != null)
+            {
+                _filtroDificultadSeleccionada = dificultad;
+                FiltrarTours();
+            }
+        }
+        else if (accion == " Limpiar todos los filtros")
+        {
+            _textoBusqueda = string.Empty;
+            OnPropertyChanged(nameof(TextoBusqueda));
+            _filtroProvinciaSeleccionada = null;
+            _filtroDificultadSeleccionada = null;
+            _filtroFechaSeleccionada = null;
+
+            FiltrarTours();
+        }
+    }
+
+    // Lógica para filtrar
+    private void FiltrarTours()
+    {
+        var resultados = _listaToursCompleta.AsEnumerable();
+
+        //Filtro por barra de búsqueda 
+        if (!string.IsNullOrWhiteSpace(TextoBusqueda))
+        {
+            resultados = resultados.Where(t => t.NombreLugar != null && t.NombreLugar.Contains(TextoBusqueda, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // Filtro por Provincia
+        if (!string.IsNullOrWhiteSpace(_filtroProvinciaSeleccionada))
+        {
+            resultados = resultados.Where(t => t.Provincia != null && t.Provincia.Equals(_filtroProvinciaSeleccionada, StringComparison.OrdinalIgnoreCase));
+        }
+
+        // Filtro por Dificultad
+        if (!string.IsNullOrWhiteSpace(_filtroDificultadSeleccionada))
+        {
+            resultados = resultados.Where(t => t.Dificultad != null && t.Dificultad.Equals(_filtroDificultadSeleccionada, StringComparison.OrdinalIgnoreCase));
+        }
+
+
+        // Actualizar coleccion tiempo real
+        ToursFiltrados.Clear();
+        foreach (var tour in resultados)
+        {
+            ToursFiltrados.Add(tour);
+        }
     }
 }
