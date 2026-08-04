@@ -8,7 +8,7 @@ namespace CRadventure
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(ReservaPage), typeof(CRadventure.Views.ReservaPage));
+            
         }
     }
 }

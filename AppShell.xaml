@@ -16,14 +16,15 @@
 
     <!-- Pestañas -->
     <TabBar>
-        <Tab Title="Mapa" Icon="mapa.png" Route="MapaPage">
-            <ShellContent ContentTemplate="{DataTemplate local:MapaPage}" />
-        </Tab>
-
         <Tab Title="Tour" Icon="tour.png" Route="TourPage">
             <ShellContent ContentTemplate="{DataTemplate local:TourPage}" />
         </Tab>
-
+        <Tab Title="Mapa" Icon="mapa.png" Route="MapaPage">
+            <ShellContent ContentTemplate="{DataTemplate local:MapaPage}" />
+        </Tab>
+        <Tab Title="Reservas" Icon="reservas.png" Route="ReservaPage">
+            <ShellContent ContentTemplate="{DataTemplate local:ReservaPage}" />
+        </Tab>
         <Tab Title="Perfil" Icon="perfil.png" Route="PerfilPage">
             <ShellContent ContentTemplate="{DataTemplate local:PerfilPage}" />
         </Tab>
