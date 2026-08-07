@@ -19,6 +19,12 @@ namespace CRadventure.Models
         [FirestoreProperty("descripcionCorta")]
         public string DescripcionCorta { get; set; } = string.Empty;
 
+        [FirestoreProperty("descripcionLarga")]
+        public string DescripcionLarga { get; set; } = string.Empty;
+
+        [FirestoreProperty("puntoEncuentro")]
+        public string PuntoEncuentro { get; set; } = string.Empty;
+
         [FirestoreProperty("imagen_url")]
         public string ImagenUrl { get; set; } = string.Empty;
 
@@ -30,8 +36,6 @@ namespace CRadventure.Models
 
         [FirestoreProperty("duracionHoras")]
         public int DuracionHoras { get; set; }
-
-        
 
         [FirestoreProperty("provincia")]
         public string Provincia { get; set; } = string.Empty;

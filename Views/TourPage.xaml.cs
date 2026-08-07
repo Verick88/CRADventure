@@ -27,7 +27,7 @@ public partial class TourPage : ContentPage
         {
             _textoBusqueda = value;
             OnPropertyChanged();
-            FiltrarTours(); // Método que crearemos en el siguiente paso
+            FiltrarTours(); 
         }
     }
     public TourPage()
@@ -64,6 +64,7 @@ public partial class TourPage : ContentPage
             _listaToursCompleta.Clear();
             ToursFiltrados.Clear();
 
+
             foreach (var tour in listaTours)
             {
                 // Lógica de los precios
@@ -93,10 +94,14 @@ public partial class TourPage : ContentPage
 
     private async void AgregarTour(object sender, EventArgs e)
     {
-        if (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin")
-            await DisplayAlert("Próximamente", "AgregarTourPage", "OK");
+        if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
+        {
+            await Shell.Current.GoToAsync(nameof(AgregarTourPage));
+        }
         else
+        {
             await DisplayAlert("Acceso", "Solo los guías pueden agregar tours", "OK");
+        }
     }
 
     private async void ClickTour(object sender, SelectionChangedEventArgs e)

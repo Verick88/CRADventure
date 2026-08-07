@@ -1,6 +1,6 @@
 namespace CRadventure.Views;
 
-public partial class AgregarTourPage : ContentView
+public partial class AgregarTourPage : ContentPage
 {
 	public AgregarTourPage()
 	{
