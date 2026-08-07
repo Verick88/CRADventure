@@ -29,10 +29,22 @@
                     <Entry x:Name="txtNombre" Placeholder="Ej. Volcán Irazú" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
                 </VerticalStackLayout>
 
-                <!-- URL de la Imagen -->
+                <!-- Imagen desde el Dispositivo -->
                 <VerticalStackLayout Spacing="5">
-                    <Label Text="URL de la Imagen" TextColor="#B0BEC5" FontSize="13"/>
-                    <Entry x:Name="txtImagenUrl" Placeholder="https://..." TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                    <Label Text="Imagen del Tour" TextColor="#B0BEC5" FontSize="13"/>
+                    <Button Text="Seleccionar Imagen de la Galería"
+                            BackgroundColor="#1C2520"
+                            TextColor="White"
+                            BorderColor="#607D8B"
+                            BorderWidth="1"
+                            HeightRequest="45"
+                            CornerRadius="8"
+                            Clicked="SeleccionarImagen_Clicked"/>
+                    <Image x:Name="imgPreview"
+                           HeightRequest="150"
+                           Aspect="AspectFill"
+                           IsVisible="False"
+                           Margin="0,5,0,0"/>
                 </VerticalStackLayout>
 
                 <!-- Provincia y Dificultad -->
@@ -90,16 +102,29 @@
                     </VerticalStackLayout>
                 </Grid>
 
+                <!-- Plazas Disponibles y Guías Adicionales -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Plazas Disponibles" TextColor="#B0BEC5" FontSize="13"/>
+                        <Entry x:Name="txtPlazas" Placeholder="Ej. 15" Keyboard="Numeric" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Guías Adicionales" TextColor="#B0BEC5" FontSize="13"/>
+                        <Entry x:Name="txtGuiasAdicionales" Placeholder="Opcional" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                    </VerticalStackLayout>
+                </Grid>
+
                 <!-- Fecha y Hora Visual -->
                 <VerticalStackLayout Spacing="5">
                     <Label Text="Fecha y Hora (Visual)" TextColor="#B0BEC5" FontSize="13"/>
                     <Entry x:Name="txtFecha" Placeholder="Ej. 27 Septiembre 2026 - 9:00am" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
                 </VerticalStackLayout>
 
-                <!-- Descripción Corta -->
+                <!-- Descripción Corta (Límite pequeño de caracteres) -->
                 <VerticalStackLayout Spacing="5">
                     <Label Text="Descripción Corta (Tarjeta)" TextColor="#B0BEC5" FontSize="13"/>
-                    <Editor x:Name="txtDescCorta" Placeholder="Resumen visible en la lista..." TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="70"/>
+                    <Editor x:Name="txtDescCorta" Placeholder="Resumen visible en la lista..." MaxLength="60" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="70"/>
                 </VerticalStackLayout>
 
                 <!-- Descripción Larga (Sección Reservas) -->

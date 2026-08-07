@@ -22,6 +22,15 @@ namespace CRadventure.Models
         [FirestoreProperty("descripcionLarga")]
         public string DescripcionLarga { get; set; } = string.Empty;
 
+        [FirestoreProperty("plazasDisponibles")]
+        public int PlazasDisponibles { get; set; }
+
+        [FirestoreProperty("guiaAsociado")]
+        public string GuiaAsociado { get; set; } = string.Empty;
+
+        [FirestoreProperty("guiasAdicionales")]
+        public string GuiasAdicionales { get; set; } = string.Empty;
+
         [FirestoreProperty("puntoEncuentro")]
         public string PuntoEncuentro { get; set; } = string.Empty;
 
