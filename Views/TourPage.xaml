@@ -106,6 +106,24 @@
                                            HeightRequest="200"
                                            HorizontalOptions="Fill"/>
 
+                                    <!-- ETIQUETA DE PLAZAS DISPONIBLES (Izquierda Arriba) -->
+                                    <Border Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 8"
+                                            Padding="8,4"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Start"
+                                            Margin="12"
+                                            BackgroundColor="#99000000">
+                                        <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                                            <Label Text="🎟️" FontSize="11" VerticalOptions="Center"/>
+                                            <Label Text="{Binding PlazasDisponibles, StringFormat='{0} disp.'}"
+                                                   TextColor="White"
+                                                   FontAttributes="Bold"
+                                                   FontSize="11"
+                                                   VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+                                    </Border>
+
                                     <!-- ETIQUETA DE DIFICULTAD -->
                                     <Border Stroke="Transparent"
                                             StrokeShape="RoundRectangle 8"

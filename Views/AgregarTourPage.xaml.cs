@@ -6,99 +6,60 @@ namespace CRadventure.Views;
 public partial class AgregarTourPage : ContentPage
 {
     private readonly TourService _tourService = new TourService();
-    private FileResult _imagenSeleccionada; // Variable para almacenar la foto elegida
-
     public AgregarTourPage()
-    {
-        InitializeComponent();
-    }
-
-    // Método para abrir la galería del dispositivo
-    private async void SeleccionarImagen_Clicked(object sender, EventArgs e)
-    {
-        try
-        {
-            _imagenSeleccionada = await MediaPicker.Default.PickPhotoAsync();
-
-            if (_imagenSeleccionada != null)
-            {
-                var stream = await _imagenSeleccionada.OpenReadAsync();
-                imgPreview.Source = ImageSource.FromStream(() => stream);
-                imgPreview.IsVisible = true;
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error", "No se pudo seleccionar la imagen de la galería.", "OK");
-        }
-    }
+	{
+		InitializeComponent();
+	}
 
     private async void GuardarTour_Clicked(object sender, EventArgs e)
     {
         try
         {
-            // Validaciones básicas requeridas
-            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
-                string.IsNullOrWhiteSpace(txtPrecioNacional.Text) ||
-                pickerProvincia.SelectedItem == null)
-            {
-                await DisplayAlert("Campos incompletos", "Por favor completa al menos el título, la provincia y el precio nacional.", "OK");
-                return;
-            }
-
-            // Conversión de datos numéricos
+            // 1. Conversiones seguras
+            int.TryParse(txtPlazas.Text, out int plazasIngresadas);
             double.TryParse(txtPrecioNacional.Text, out double precioNac);
+            double.TryParse(txtPrecioExtranjero.Text, out double precioExt);
+            int.TryParse(txtDuracion.Text, out int duracionHoras);
 
-            double precioExt = 0;
-            if (!string.IsNullOrWhiteSpace(txtPrecioExtranjero.Text))
+            // 2. Obtener el nombre y apellidos completos desde la sesión actual
+            string nombreGuia = $"{SesionService.UsuarioActual?.Nombre} {SesionService.UsuarioActual?.Apellidos}".Trim();
+
+            if (string.IsNullOrWhiteSpace(nombreGuia))
             {
-                double.TryParse(txtPrecioExtranjero.Text, out precioExt);
-            }
-            else
-            {
-                // Conversión automática por defecto (Ej. 1 USD = 520 CRC)
-                precioExt = Math.Round(precioNac / 520.0, 2);
+                nombreGuia = "Guía General";
             }
 
-            int.TryParse(txtDuracion.Text, out int duracion);
-            int.TryParse(txtPlazas.Text, out int plazas);
-
-            // Manejo de la imagen: Si seleccionó archivo, simulamos o subimos la ruta. 
-            // Como Firestore guarda texto, aquí puedes almacenar la ruta local o la URL si configuras Storage.
-            string rutaImagenFinal = _imagenSeleccionada?.FullPath ?? "default_tour.png";
-
+            // 3. Crear el modelo con los x:Name exactos del XAML
             var nuevoTour = new TourModel
             {
-                NombreLugar = txtNombre.Text.Trim(),
-                ImagenUrl = rutaImagenFinal,
+                NombreLugar = txtNombre.Text ?? string.Empty,
+                ImagenUrl = txtImagenUrl.Text ?? string.Empty,
                 Provincia = pickerProvincia.SelectedItem?.ToString() ?? "San José",
-                Dificultad = pickerDificultad.SelectedItem?.ToString() ?? "Media",
+                Dificultad = pickerDificultad.SelectedItem?.ToString() ?? "Fácil",
                 PrecioNacional = precioNac,
                 PrecioExtranjero = precioExt,
-                DuracionHoras = duracion > 0 ? duracion : 1,
-                Idiomas = string.IsNullOrWhiteSpace(txtIdiomas.Text) ? "Español" : txtIdiomas.Text.Trim(),
-                FechaHoraVisual = string.IsNullOrWhiteSpace(txtFecha.Text) ? "Fecha por definir" : txtFecha.Text.Trim(),
+                DuracionHoras = duracionHoras,
+                Idiomas = txtIdiomas.Text ?? string.Empty,
+                PlazasDisponibles = plazasIngresadas,
+                GuiasAdicionales = txtGuiasAdicionales.Text ?? string.Empty,
+                FechaHoraVisual = txtFecha.Text ?? "Fecha por definir",
+                DescripcionCorta = txtDescCorta.Text ?? string.Empty,
+                DescripcionLarga = txtDescLarga.Text ?? string.Empty,
+                PuntoEncuentro = txtPuntoEncuentro.Text ?? string.Empty,
 
-                // Nuevos campos solicitados
-                PlazasDisponibles = plazas > 0 ? plazas : 10,
-                GuiaAsociado = SesionService.UsuarioActual?.Nombre ?? "Guía Principal",
-                GuiasAdicionales = string.IsNullOrWhiteSpace(txtGuiasAdicionales.Text) ? "Ninguno" : txtGuiasAdicionales.Text.Trim(),
-
-                // Descripciones y puntos de encuentro
-                DescripcionCorta = txtDescCorta.Text?.Trim() ?? string.Empty,
-                DescripcionLarga = txtDescLarga.Text?.Trim() ?? string.Empty,
-                PuntoEncuentro = txtPuntoEncuentro.Text?.Trim() ?? string.Empty
+                // Asignamos el nombre completo del guía
+                GuiaAsociado = nombreGuia
             };
 
-            // Guardar en Firestore a través del servicio
+            // 4. Guardar en Firebase
             await _tourService.AgregarTourAsync(nuevoTour);
 
-            await DisplayAlert("Éxito", "El tour ha sido agregado correctamente.", "OK");
+            await DisplayAlert("Éxito", "Tour guardado correctamente", "OK");
             await Shell.Current.GoToAsync(".."); // Regresar a la pantalla anterior
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"No se pudo guardar el tour: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"No se pudo guardar: {ex.Message}", "OK");
         }
     }
 }

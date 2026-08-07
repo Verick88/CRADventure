@@ -51,7 +51,6 @@ public partial class TourPage : ContentPage
 
     private string _filtroProvinciaSeleccionada;
     private string _filtroDificultadSeleccionada;
-    private string _filtroFechaSeleccionada;
 
     protected override async void OnAppearing()
     {
@@ -72,11 +71,13 @@ public partial class TourPage : ContentPage
             _listaToursCompleta.Clear();
             ToursFiltrados.Clear();
 
+            // Validar si el usuario actual existe y verificar su valor de extranjero
+            bool esExtranjero = _usuarioActual != null && _usuarioActual.EsExtranjero;
 
             foreach (var tour in listaTours)
             {
-                // Lógica de los precios
-                tour.AplicarTarifa(_usuarioActual.EsExtranjero);
+                // Lógica de los precios aplicando de forma segura si es extranjero
+                tour.AplicarTarifa(esExtranjero);
 
                 // Valida que idiomas no esté vacío
                 if (!string.IsNullOrEmpty(tour.Idiomas))
@@ -156,7 +157,6 @@ public partial class TourPage : ContentPage
             OnPropertyChanged(nameof(TextoBusqueda));
             _filtroProvinciaSeleccionada = null;
             _filtroDificultadSeleccionada = null;
-            _filtroFechaSeleccionada = null;
 
             FiltrarTours();
         }

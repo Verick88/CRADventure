@@ -29,22 +29,10 @@
                     <Entry x:Name="txtNombre" Placeholder="Ej. Volcán Irazú" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
                 </VerticalStackLayout>
 
-                <!-- Imagen desde el Dispositivo -->
+                <!-- URL de la Imagen -->
                 <VerticalStackLayout Spacing="5">
-                    <Label Text="Imagen del Tour" TextColor="#B0BEC5" FontSize="13"/>
-                    <Button Text="Seleccionar Imagen de la Galería"
-                            BackgroundColor="#1C2520"
-                            TextColor="White"
-                            BorderColor="#607D8B"
-                            BorderWidth="1"
-                            HeightRequest="45"
-                            CornerRadius="8"
-                            Clicked="SeleccionarImagen_Clicked"/>
-                    <Image x:Name="imgPreview"
-                           HeightRequest="150"
-                           Aspect="AspectFill"
-                           IsVisible="False"
-                           Margin="0,5,0,0"/>
+                    <Label Text="URL de la Imagen" TextColor="#B0BEC5" FontSize="13"/>
+                    <Entry x:Name="txtImagenUrl" Placeholder="https://..." TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
                 </VerticalStackLayout>
 
                 <!-- Provincia y Dificultad -->
