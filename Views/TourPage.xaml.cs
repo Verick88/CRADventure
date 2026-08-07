@@ -53,6 +53,14 @@ public partial class TourPage : ContentPage
     private string _filtroDificultadSeleccionada;
     private string _filtroFechaSeleccionada;
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Recarga los tours desde Firebase cada vez que regresas o entras a la página
+        CargarTours();
+    }
+
     //Metodo para cargar los tours desde firebase
     private async void CargarTours()
     {

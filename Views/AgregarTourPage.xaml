@@ -3,11 +3,129 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CRadventure.Views.AgregarTourPage"
              NavigationPage.HasNavigationBar="False">
-    
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <Grid>
+        <!-- Fondo de pantalla -->
+        <Image Source="dashboard.png" 
+               Aspect="AspectFill" 
+               HorizontalOptions="Fill" 
+               VerticalOptions="Fill"/>
+
+        <BoxView BackgroundColor="#CC0A140E" />
+
+        <ScrollView Padding="20">
+            <VerticalStackLayout Spacing="15">
+
+                <Label Text="Crear Nuevo Tour"
+                       TextColor="White"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,10"/>
+
+                <!-- Título del Tour -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Título del Tour" TextColor="#B0BEC5" FontSize="13"/>
+                    <Entry x:Name="txtNombre" Placeholder="Ej. Volcán Irazú" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                </VerticalStackLayout>
+
+                <!-- URL de la Imagen -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="URL de la Imagen" TextColor="#B0BEC5" FontSize="13"/>
+                    <Entry x:Name="txtImagenUrl" Placeholder="https://..." TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                </VerticalStackLayout>
+
+                <!-- Provincia y Dificultad -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Provincia" TextColor="#B0BEC5" FontSize="13"/>
+                        <Picker x:Name="pickerProvincia" Title="Seleccione" TextColor="White" BackgroundColor="#1C2520" HeightRequest="45">
+                            <Picker.Items>
+                                <x:String>Puntarenas</x:String>
+                                <x:String>San José</x:String>
+                                <x:String>Alajuela</x:String>
+                                <x:String>Cartago</x:String>
+                                <x:String>Heredia</x:String>
+                                <x:String>Guanacaste</x:String>
+                                <x:String>Limón</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Dificultad" TextColor="#B0BEC5" FontSize="13"/>
+                        <Picker x:Name="pickerDificultad" Title="Seleccione" TextColor="White" BackgroundColor="#1C2520" HeightRequest="45">
+                            <Picker.Items>
+                                <x:String>Fácil</x:String>
+                                <x:String>Media</x:String>
+                                <x:String>Alta</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Precios: Nacional y Extranjero -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Precio Nacional (CRC)" TextColor="#B0BEC5" FontSize="13"/>
+                        <Entry x:Name="txtPrecioNacional" Placeholder="Ej. 10000" Keyboard="Numeric" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Precio Extranjero (USD)" TextColor="#B0BEC5" FontSize="13"/>
+                        <Entry x:Name="txtPrecioExtranjero" Placeholder="Opcional (Auto)" Keyboard="Numeric" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Duración e Idiomas -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Duración (Horas)" TextColor="#B0BEC5" FontSize="13"/>
+                        <Entry x:Name="txtDuracion" Placeholder="Ej. 3" Keyboard="Numeric" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Idiomas" TextColor="#B0BEC5" FontSize="13"/>
+                        <Entry x:Name="txtIdiomas" Placeholder="Ej. Español, Inglés" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Fecha y Hora Visual -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Fecha y Hora (Visual)" TextColor="#B0BEC5" FontSize="13"/>
+                    <Entry x:Name="txtFecha" Placeholder="Ej. 27 Septiembre 2026 - 9:00am" TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                </VerticalStackLayout>
+
+                <!-- Descripción Corta -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Descripción Corta (Tarjeta)" TextColor="#B0BEC5" FontSize="13"/>
+                    <Editor x:Name="txtDescCorta" Placeholder="Resumen visible en la lista..." TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="70"/>
+                </VerticalStackLayout>
+
+                <!-- Descripción Larga (Sección Reservas) -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Descripción Larga (Detalle de Reserva)" TextColor="#B0BEC5" FontSize="13"/>
+                    <Editor x:Name="txtDescLarga" Placeholder="Información completa que se muestra al reservar..." TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="100"/>
+                </VerticalStackLayout>
+
+                <!-- Punto de Encuentro (Sección Reservas) -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Punto de Encuentro" TextColor="#B0BEC5" FontSize="13"/>
+                    <Entry x:Name="txtPuntoEncuentro" Placeholder="Ej. Parque central, costado norte..." TextColor="White" PlaceholderColor="#607D8B" BackgroundColor="#1C2520" HeightRequest="45"/>
+                </VerticalStackLayout>
+
+                <!-- Botón Guardar -->
+                <Button Text="Guardar Tour"
+                        BackgroundColor="#93C94A"
+                        TextColor="#0A140E"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HeightRequest="50"
+                        CornerRadius="10"
+                        Margin="0,15,0,30"
+                        Clicked="GuardarTour_Clicked"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
