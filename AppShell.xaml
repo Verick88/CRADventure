@@ -7,11 +7,7 @@
     Shell.FlyoutBehavior="Disabled"
     Title="CRadventure">
 
-    <!-- Pantalla de Login inicial -->
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" />
+   
     
 
     <!-- Pestañas -->

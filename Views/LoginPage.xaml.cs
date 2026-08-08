@@ -55,6 +55,21 @@ public partial class LoginPage : ContentPage
         try
         {
             var auth = CrossFirebaseAuth.Current;
+
+            // PREVENCIÓN: Forzar cierre de sesión previo para evitar que arrastre datos anteriores
+            try
+            {
+                await auth.SignOutAsync();
+            }
+            catch
+            {
+                // Si no habia sesiòn activa, ignoramos el error y continuamos 
+            }
+
+            // Limpiar también el servicio de sesión en memoria por seguridad
+            SesionService.UsuarioActual = null;
+
+            // Autenticar con el nuevo usuario
             var user = await auth.SignInWithEmailAndPasswordAsync(txtCorreo.Text.Trim(), txtPassword.Text);
 
             if (user == null)
@@ -92,11 +107,15 @@ public partial class LoginPage : ContentPage
             // Se guarda el usuario con el servicio de sesion
             SesionService.UsuarioActual = usuario;
 
-            // Navegar según el rol
+            // Navegar según el rol cargando el AppShell completo
             if (usuario.Rol == "admin" || usuario.Rol == "guia" || usuario.Rol == "cliente")
-                await Shell.Current.GoToAsync("//TourPage");
+            {
+                Application.Current.MainPage = new AppShell();
+            }
             else
+            {
                 await DisplayAlert("Error", "Rol no reconocido", "OK");
+            }
         }
         catch (Exception ex)
         {

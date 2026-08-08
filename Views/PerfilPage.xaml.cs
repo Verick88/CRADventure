@@ -6,7 +6,6 @@ namespace CRadventure.Views;
 
 public partial class PerfilPage : ContentPage
 {
-    // instanciamos nuestro servicio de usuarios y el servicio de autenticacion de Firebase
     private readonly UsuarioService _usuarioService;
 
     public PerfilPage()
@@ -15,45 +14,40 @@ public partial class PerfilPage : ContentPage
         _usuarioService = new UsuarioService();
     }
 
-    // este metodo se ejecuta automaticamente cada vez que la pagina aparece en pantalla
     protected override async void OnAppearing()
     {
         base.OnAppearing();
         await CargarDatosPerfilAsync();
     }
 
-    // metodo para obtener el UID del usuario actual y buscar sus datos en firestore
     private async Task CargarDatosPerfilAsync()
     {
         try
         {
-            // obtenemos el usuario autenticado actualmente en la app
             var usuarioAuth = CrossFirebaseAuth.Current.CurrentUser;
             if (usuarioAuth != null)
             {
                 string uid = usuarioAuth.Uid;
 
-                // llamamos a nuestro servicio usando el método seguro por UID
                 var usuarioModel = await _usuarioService.ObtenerUsuarioPorUidAsync(uid);
 
                 if (usuarioModel != null)
                 {
-                    // llenamos los campos visuales de la pantalla con la información de la base de datos
+                    // =========================================================
+                    // CORRECCIÓN CLAVE 1: Guardar el usuario actual en la sesión global
+                    // =========================================================
+                    SesionService.UsuarioActual = usuarioModel;
+
                     txtNombre.Text = usuarioModel.Nombre;
                     txtApellidos.Text = usuarioModel.Apellidos;
                     txtTelefono.Text = usuarioModel.Telefono;
                     lblEmail.Text = usuarioModel.Email;
 
-
-                    // logica para mostrar el rol y habilitar el boton Admin
-
                     if (!string.IsNullOrEmpty(usuarioModel.Rol))
                     {
-                        // Mostramos el rol en texto mayúscula (ej: "Rol: CLIENTE")
                         lblRolUsuario.Text = $"Rol: {usuarioModel.Rol.ToUpper()}";
 
-                        // si el rol es admin, encendemos el botón. si no, lo apagamos.
-                        if (usuarioModel.Rol.ToLower() == "admin")
+                        if (usuarioModel.Rol.ToLower() == "admin" || usuarioModel.Rol.ToLower() == "guia" || usuarioModel.Rol.ToLower() == "guía")
                         {
                             btnPanelAdmin.IsVisible = true;
                         }
@@ -64,23 +58,9 @@ public partial class PerfilPage : ContentPage
                     }
                     else
                     {
-                        // por si algún usuario viejo en la base de datos no tiene rol asignado aún
                         lblRolUsuario.Text = "Rol: CLIENTE";
                         btnPanelAdmin.IsVisible = false;
                     }
-                    // =========================================================
-
-                    // Si tienes una propiedad de FotoUrl en tu modelo que almacena Base64 o URL, cargarla aquí
-                    // if (!string.IsNullOrEmpty(usuarioModel.FotoUrl))
-                    // {
-                    //     if (usuarioModel.FotoUrl.StartsWith("http"))
-                    //         imgPerfil.Source = ImageSource.FromUri(new Uri(usuarioModel.FotoUrl));
-                    //     else
-                    //     {
-                    //         byte[] imageBytes = Convert.FromBase64String(usuarioModel.FotoUrl);
-                    //         imgPerfil.Source = ImageSource.FromStream(() => new MemoryStream(imageBytes));
-                    //     }
-                    // }
                 }
             }
         }
@@ -90,7 +70,6 @@ public partial class PerfilPage : ContentPage
         }
     }
 
-    // evento que se ejecuta al presionar el botón de "Guardar Cambios" en el perfil
     private async void OnGuardarClicked(object sender, EventArgs e)
     {
         try
@@ -103,8 +82,15 @@ public partial class PerfilPage : ContentPage
             string apellidos = txtApellidos.Text;
             string telefono = txtTelefono.Text;
 
-            // llamamos al servicio para actualizar los datos en Firestore
             await _usuarioService.ActualizarPerfilAsync(uid, nombre, apellidos, telefono);
+
+            // Actualizar también en memoria los datos locales de la sesión
+            if (SesionService.UsuarioActual != null)
+            {
+                SesionService.UsuarioActual.Nombre = nombre;
+                SesionService.UsuarioActual.Apellidos = apellidos;
+                SesionService.UsuarioActual.Telefono = telefono;
+            }
 
             await DisplayAlert("Éxito", "Perfil actualizado correctamente", "OK");
         }
@@ -114,7 +100,6 @@ public partial class PerfilPage : ContentPage
         }
     }
 
-    // seleccionar, cambiar y guardar la foto en Firestore automáticamente
     private async void OnCambiarFotoClicked(object sender, EventArgs e)
     {
         try
@@ -128,11 +113,8 @@ public partial class PerfilPage : ContentPage
             if (result != null)
             {
                 var filePath = result.FullPath;
-
-                // mostrar en la UI de inmediato
                 imgPerfil.Source = ImageSource.FromFile(filePath);
 
-                // convertir la imagen a Base64 para guardarla permanentemente en Firestore
                 byte[] imageBytes;
                 using (var stream = await result.OpenReadAsync())
                 {
@@ -144,7 +126,6 @@ public partial class PerfilPage : ContentPage
                 }
                 string base64Image = Convert.ToBase64String(imageBytes);
 
-                // obtener usuario actual y guardar en la base de datos
                 var usuarioAuth = CrossFirebaseAuth.Current.CurrentUser;
                 if (usuarioAuth != null)
                 {
@@ -159,7 +140,6 @@ public partial class PerfilPage : ContentPage
         }
     }
 
-    // cerrar sesión desde el perfil
     private async void OnCerrarSesion_Clicked(object sender, EventArgs e)
     {
         bool confirmar = await DisplayAlert("Cerrar Sesión", "¿Estás seguro de que deseas salir?", "Sí", "No");
@@ -167,10 +147,14 @@ public partial class PerfilPage : ContentPage
         {
             try
             {
+                // 1. Cerrar sesión en Firebase
                 await CrossFirebaseAuth.Current.SignOutAsync();
 
-                // mantener el Shell vivo
-                await Shell.Current.GoToAsync("//LoginPage");
+                // 2. Limpiar la sesión global por completo
+                SesionService.UsuarioActual = null;
+
+                // 3. DESTRUIR EL SHELL: Reemplazar la página principal por una nueva instancia del Login
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
             }
             catch (Exception ex)
             {
@@ -179,11 +163,8 @@ public partial class PerfilPage : ContentPage
         }
     }
 
-
-    // navegar a la pantalla de administrador al tocar el boton
     private async void OnPanelAdminClicked(object sender, EventArgs e)
     {
-        // Esto abre la pantalla del AdminPage por encima del perfil
         await Navigation.PushAsync(new AdminPage());
     }
 }

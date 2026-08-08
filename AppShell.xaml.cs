@@ -8,6 +8,7 @@ namespace CRadventure
         {
             InitializeComponent();
 
+           
             Routing.RegisterRoute(nameof(AgregarTourPage), typeof(AgregarTourPage));
             Routing.RegisterRoute(nameof(ReservaPage), typeof(ReservaPage));
         }
