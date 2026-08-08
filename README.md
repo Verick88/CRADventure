@@ -1,7 +1,7 @@
 # CRADventure, aplicación de viajes en .NET MAUI
 Tecnologías utilizadas: .NET MAUI, C#, Firebase, Firestore, API  google maps
 
-Características principales: Aplicación móvil con un apartado de login y registro, en el cuál los usuarios pueden tener un estilo de ¨Marketplace¨ de guías turísticas de Costa Rica, con el cuál pueden filtrar las guías que quieren por precio, provincia y día.
+Características principales: Aplicación móvil con un apartado de login y registro, en el cuál los usuarios pueden tener un estilo de ¨Marketplace¨ de guías turísticas de Costa Rica, con el cuál pueden filtrar las guías que quieren po, provincia y dificultad.
 Así mismo posee un sistema robusto de roles (Admin, guía, cliente) para que cada uno posea sus propios privilegios dentro de la aplicación.
 También, tiene integrado un mapa interactivo para que los usuarios disfruten de una mejor experiencia.
 
