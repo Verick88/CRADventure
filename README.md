@@ -5,7 +5,13 @@ Características principales: Aplicación móvil con un apartado de login y regi
 Así mismo posee un sistema robusto de roles (Admin, guía, cliente) para que cada uno posea sus propios privilegios dentro de la aplicación.
 También, tiene integrado un mapa interactivo para que los usuarios disfruten de una mejor experiencia.
 
-
+Login y Registro
 <img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/3e76482c-423c-4898-9718-fa13eb3268f4" /> 
 <img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/90c37e46-a87c-4f5c-817c-012cd705ef94" />
+
+Vista de las Guías Turísticas
+<img width="308" height="597" alt="image" src="https://github.com/user-attachments/assets/a32f3294-7499-47f3-ae57-1ff047f62b93" />
+
+
+
 
