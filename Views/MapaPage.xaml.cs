@@ -1,16 +1,20 @@
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
+using CRadventure.Models;
+using CRadventure.Services;
 
 namespace CRadventure.Views;
 
 public partial class MapaPage : ContentPage
 {
+    private readonly MonumentoService _service = new();
+
     public MapaPage()
     {
         InitializeComponent();
 
         ConfigurarMapa();
-        AgregarMonumentosPrueba();
+        CargarMonumentos();
     }
 
     private void ConfigurarMapa()
@@ -23,31 +27,54 @@ public partial class MapaPage : ContentPage
                 Distance.FromKilometers(120)));
     }
 
-    private void AgregarMonumentosPrueba()
+    private async void CargarMonumentos()
     {
-        mapaCostaRica.Pins.Add(new Pin
+        try
         {
-            Label = "Fortin Nacional",
-            Address = "construida en 1876 en el centro de la ciudad de Heredia, " +
-            "famosa por haber sido diseñada por Fadrique Gutiérrez López y por tener troneras al revés",
-            Type = PinType.Place,
-            Location = new Location(9.999281722878715, -84.11707839947388)
-        });
+            var monumentos = await _service.ObtenerMonumentosAsync();
 
-        mapaCostaRica.Pins.Add(new Pin
-        {
-            Label = "Basílica de Cartago",
-            Address = "Cartago",
-            Type = PinType.Place,
-            Location = new Location(9.8644, -83.9194)
-        });
+            mapaCostaRica.Pins.Clear();
 
-        mapaCostaRica.Pins.Add(new Pin
+            foreach (var m in monumentos)
+            {
+                var pin = new Pin
+                {
+                    Label = m.Nombre,
+                    Address = m.Zona,
+                    Type = PinType.Place,
+                    Location = new Location(m.Latitud, m.Longitud)
+                };
+
+                pin.MarkerClicked += (s, e) =>
+                {
+                    e.HideInfoWindow = true;
+                    MostrarTarjetaMonumento(m);
+                };
+
+                mapaCostaRica.Pins.Add(pin);
+            }
+        }
+        catch (Exception ex)
         {
-            Label = "Parque Nacional Manuel Antonio",
-            Address = "Quepos",
-            Type = PinType.Place,
-            Location = new Location(9.4120, -84.1550)
-        });
+            await DisplayAlert(
+                "Error",
+                $"No se pudieron cargar los monumentos:\n{ex.Message}",
+                "OK");
+        }
+    }
+
+    private void MostrarTarjetaMonumento(MonumentoModel m)
+    {
+        lblNombre.Text = m.Nombre;
+        lblHistoria.Text = m.Historia;
+
+        panelMonumento.IsVisible = true;
+    }
+
+
+
+    private void CerrarPanel_Clicked(object sender, EventArgs e)
+    {
+        panelMonumento.IsVisible = false;
     }
 }

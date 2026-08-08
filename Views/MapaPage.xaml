@@ -1,62 +1,63 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
     x:Class="CRadventure.Views.MapaPage"
-    NavigationPage.HasNavigationBar="False"
-    Shell.NavBarIsVisible="False"
-    Title="Mapa">
+    Title="">
 
     <Grid>
-        <!-- Imagen de fondo general de la app para que el espacio exterior combine -->
-        <Image
-            Source="mapa_fondo1.png"
-            Aspect="AspectFill"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill" />
 
-        <!-- Degradado oscuro para mantener la estética -->
-        <BoxView HorizontalOptions="Fill" VerticalOptions="Fill">
-            <BoxView.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#30050A06" Offset="0.0" />
-                    <GradientStop Color="#CC09130B" Offset="0.5" />
-                    <GradientStop Color="#FA050A06" Offset="1.0" />
-                </LinearGradientBrush>
-            </BoxView.Background>
-        </BoxView>
+        <maps:Map
+            x:Name="mapaCostaRica"
+            IsShowingUser="False"
+            MapType="Street"/>
 
-        <!-- Contenedor principal con márgenes para dar el efecto de tarjeta -->
-        <Grid RowDefinitions="Auto, *" Margin="15,40,15,15">
+        <Frame
+            x:Name="panelMonumento"
+            IsVisible="False"
+            BackgroundColor="#e6ffcc"
+            CornerRadius="24"
+            Padding="20"
+            Margin="12"
+            VerticalOptions="End"
+            HasShadow="True">
 
-            <!-- Título superior elegante -->
-            <HorizontalStackLayout Spacing="10" VerticalOptions="Center" Margin="5,0,0,12">
-                <Label Text="Mapa de Costa Rica"
-                       FontFamily="MontserratBold"
-                       FontSize="20"
-                       TextColor="White"
-                       VerticalOptions="Center"/>
-            </HorizontalStackLayout>
+            <VerticalStackLayout Spacing="12">
 
-            <!-- Marco con esquinas redondeadas que contiene tu mapa -->
-            <Border Grid.Row="1"
-                    Stroke="#1EFFFFFF"
-                    StrokeThickness="1"
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20"/>
-                </Border.StrokeShape>
+                <Label
+                    x:Name="lblNombre"
+                     FontFamily="Kaushan"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="ForestGreen"/>
 
-                <maps:Map
-                    x:Name="mapaCostaRica"
-                    IsShowingUser="True"
-                    MapType="Street"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill" />
-            </Border>
-        </Grid>
+                <ScrollView HeightRequest="180">
+                    <Label
+                        x:Name="lblHistoria"
+                         FontFamily="MontserratRegular"
+                        FontSize="24"
+                        TextColor="#663500"
+                        LineBreakMode="WordWrap"/>
+                </ScrollView>
+
+                <Button
+                     Text="Cerrar"
+    BackgroundColor="#2E7D32"
+    FontFamily="Kaushan"
+    TextColor="White"
+    CornerRadius="12"
+    HeightRequest="45"
+    FontAttributes="Bold"
+    Clicked="CerrarPanel_Clicked"/>
+                
+                
+                
+                
+
+            </VerticalStackLayout>
+
+        </Frame>
+
     </Grid>
+
 </ContentPage>

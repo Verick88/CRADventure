@@ -89,6 +89,7 @@
 
   <ItemGroup>
     <None Remove="Platforms\Android\google-services.json" />
+    <None Remove="Platforms\Android\Resources\raw\map_style.json" />
   </ItemGroup>
 
   <ItemGroup>
