@@ -65,6 +65,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <MauiXaml Update="Views\AdminPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\AgregarTourPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

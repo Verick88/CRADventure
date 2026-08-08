@@ -98,6 +98,14 @@
                                     FontFamily="MontserratBold"
                                     CornerRadius="8"
                                     HorizontalOptions="Center"/>
+
+                            <!-- Etiqueta para mostrar el rol del usuario -->
+                            <Label x:Name="lblRolUsuario"
+                                   Text="Rol: Cargando..."
+                                   FontFamily="MontserratBold"
+                                   FontSize="12"
+                                   TextColor="White"
+                                   HorizontalOptions="Center"/>
                         </VerticalStackLayout>
 
                         <!-- Correo Electrónico (Solo lectura informativo) -->
@@ -153,6 +161,19 @@
                                 FontSize="13"
                                 HeightRequest="42"
                                 Margin="0,6,0,0"
+                                CornerRadius="8"/>
+
+                        <!-- Botón oculto para el Panel de Administración -->
+                        <Button x:Name="btnPanelAdmin"
+                                Text="⚙️ Panel de Administración"
+                                IsVisible="False"
+                                Clicked="OnPanelAdminClicked"
+                                BackgroundColor="#3b3b98"
+                                TextColor="White"
+                                FontFamily="MontserratBold"
+                                FontSize="13"
+                                HeightRequest="42"
+                                Margin="0,5,0,0"
                                 CornerRadius="8"/>
 
                     </VerticalStackLayout>

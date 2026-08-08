@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Linq;
 using CRadventure.Models;
 using Plugin.Firebase.Firestore;
 using Plugin.Firebase.Auth;
@@ -47,6 +48,41 @@ namespace CRadventure.Services
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error al obtener usuario: {ex.Message}");
+                return null;
+            }
+        }
+
+
+        // metodo optimizado y directo para buscar usuario por correo
+        public async Task<UsuarioModel?> ObtenerUsuarioPorEmailAsync(string email)
+        {
+            try
+            {
+                // busqueda nativa y directa al correo
+                var querySnapshot = await CrossFirebaseFirestore.Current
+                    .GetCollection(ColeccionUsuarios)
+                    .WhereEqualsTo("email", email.Trim())
+                    .GetDocumentsAsync<UsuarioModel>();
+
+                // verificamos si firebase encontro al menos un documento que coincida
+                if (querySnapshot != null && querySnapshot.Documents.Any())
+                {
+                    var documento = querySnapshot.Documents.First();
+                    var usuario = documento.Data;
+
+                    if (usuario != null)
+                    {
+                        usuario.Uid = documento.Reference.Id;
+                        return usuario;
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                // si firebase nos bloquea o falla el internet, lo veremos en la consola
+                System.Diagnostics.Debug.WriteLine($"Error al buscar por correo: {ex.Message}");
                 return null;
             }
         }

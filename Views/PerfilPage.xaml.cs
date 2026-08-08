@@ -42,7 +42,33 @@ public partial class PerfilPage : ContentPage
                     txtNombre.Text = usuarioModel.Nombre;
                     txtApellidos.Text = usuarioModel.Apellidos;
                     txtTelefono.Text = usuarioModel.Telefono;
-                    lblEmail.Text = usuarioModel.Email; // por si tienes una etiqueta para mostrar el correo
+                    lblEmail.Text = usuarioModel.Email;
+
+
+                    // logica para mostrar el rol y habilitar el boton Admin
+
+                    if (!string.IsNullOrEmpty(usuarioModel.Rol))
+                    {
+                        // Mostramos el rol en texto mayúscula (ej: "Rol: CLIENTE")
+                        lblRolUsuario.Text = $"Rol: {usuarioModel.Rol.ToUpper()}";
+
+                        // si el rol es admin, encendemos el botón. si no, lo apagamos.
+                        if (usuarioModel.Rol.ToLower() == "admin")
+                        {
+                            btnPanelAdmin.IsVisible = true;
+                        }
+                        else
+                        {
+                            btnPanelAdmin.IsVisible = false;
+                        }
+                    }
+                    else
+                    {
+                        // por si algún usuario viejo en la base de datos no tiene rol asignado aún
+                        lblRolUsuario.Text = "Rol: CLIENTE";
+                        btnPanelAdmin.IsVisible = false;
+                    }
+                    // =========================================================
 
                     // Si tienes una propiedad de FotoUrl en tu modelo que almacena Base64 o URL, cargarla aquí
                     // if (!string.IsNullOrEmpty(usuarioModel.FotoUrl))
@@ -151,5 +177,13 @@ public partial class PerfilPage : ContentPage
                 await DisplayAlert("Error", "No se pudo cerrar sesión: " + ex.Message, "OK");
             }
         }
+    }
+
+
+    // navegar a la pantalla de administrador al tocar el boton
+    private async void OnPanelAdminClicked(object sender, EventArgs e)
+    {
+        // Esto abre la pantalla del AdminPage por encima del perfil
+        await Navigation.PushAsync(new AdminPage());
     }
 }
