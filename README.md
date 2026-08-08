@@ -9,6 +9,8 @@ También, tiene integrado un mapa interactivo para que los usuarios disfruten de
 <img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/3e76482c-423c-4898-9718-fa13eb3268f4" /> 
 <img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/90c37e46-a87c-4f5c-817c-012cd705ef94" />
 <img width="308" height="597" alt="image" src="https://github.com/user-attachments/assets/a32f3294-7499-47f3-ae57-1ff047f62b93" />
+<img width="329" height="596" alt="image" src="https://github.com/user-attachments/assets/cdb3cbde-8d5a-40cd-9663-e34b4652e423" />
+
 
 
 
