@@ -6,8 +6,8 @@ Así mismo posee un sistema robusto de roles (Admin, guía, cliente) para que ca
 También, tiene integrado un mapa interactivo para que los usuarios disfruten de una mejor experiencia.
 
 
-<img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/3e76482c-423c-4898-9718-fa13eb3268f4" /> 
-<img width="326" height="570" alt="image" src="https://github.com/user-attachments/assets/90c37e46-a87c-4f5c-817c-012cd705ef94" />
+<img width="274" height="532" alt="image" src="https://github.com/user-attachments/assets/02260c92-38a5-4beb-b5ec-a5c7289aa341" />
+<img width="273" height="532" alt="image" src="https://github.com/user-attachments/assets/e760f91f-b3dc-421c-9fd4-66a18aea3274" />
 <img width="282" height="564" alt="image" src="https://github.com/user-attachments/assets/70a1aa09-d380-4fc0-a0c7-866290aefb3e" />
 <img width="329" height="596" alt="image" src="https://github.com/user-attachments/assets/cdb3cbde-8d5a-40cd-9663-e34b4652e423" />
 <img width="340" height="631" alt="image" src="https://github.com/user-attachments/assets/e541d914-dc25-45c9-9741-599f500efb76" />
