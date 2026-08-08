@@ -13,7 +13,21 @@ namespace CRadventure.Services
     {
         private const string ColeccionTours = "tours";
 
+        public async Task ActualizarTourAsync(TourModel tour)
+        {
+            await CrossFirebaseFirestore.Current
+                .GetCollection("tours")
+                .GetDocument(tour.Id)
+                .SetDataAsync(tour);
+        }
 
+        public async Task EliminarTourAsync(string tourId)
+        {
+            await CrossFirebaseFirestore.Current
+                .GetCollection("tours")
+                .GetDocument(tourId)
+                .DeleteDocumentAsync();
+        }
         public async Task AgregarTourAsync(TourModel tour)
         {
             await CrossFirebaseFirestore.Current
@@ -42,6 +56,7 @@ namespace CRadventure.Services
             return documento?.Data;
         }
     }
+
 
     
 

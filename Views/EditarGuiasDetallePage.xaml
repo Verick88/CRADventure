@@ -2,11 +2,208 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CRadventure.Views.EditarGuiasDetallePage"
-             Title="EditarGuiasDetallePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <!-- Fondo idéntico al de las demás pantallas -->
+        <Image Source="dashboard.png" 
+               Aspect="AspectFill" 
+               HorizontalOptions="Fill" 
+               VerticalOptions="Fill"/>
+
+        <BoxView BackgroundColor="#CC0A140E" />
+
+        <!-- ScrollView para que se pueda deslizar por todos los campos -->
+        <ScrollView>
+            <VerticalStackLayout Spacing="15" Padding="20">
+
+                <!-- CABECERA: Botón Volver y Título -->
+                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="10" Margin="0,10,0,5">
+                    <Button Text="◀"
+                            TextColor="White"
+                            BackgroundColor="#1C2520"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            CornerRadius="8"
+                            Clicked="OnVolverClicked"/>
+
+                    <Border Grid.Column="1"
+                            BackgroundColor="#1C2520"
+                            Stroke="#33FFFFFF"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="15,10"
+                            VerticalOptions="Center">
+                        <Label Text="Editar Tour"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- Título del Tour -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Título del Tour" TextColor="#A0A0A0" FontSize="13"/>
+                    <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                        <Entry Text="{Binding TourActual.NombreLugar}" Placeholder="Ej. Volcán Irazú" TextColor="White" PlaceholderColor="#666"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- URL de la Imagen -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="URL de la Imagen" TextColor="#A0A0A0" FontSize="13"/>
+                    <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                        <Entry Text="{Binding TourActual.ImagenUrl}" Placeholder="https://..." TextColor="White" PlaceholderColor="#666"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Provincia y Dificultad (Grid de 2 columnas) -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Provincia" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="5">
+                            <Picker SelectedItem="{Binding TourActual.Provincia}" Title="Seleccione" TitleColor="#666" TextColor="White">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>San José</x:String>
+                                        <x:String>Alajuela</x:String>
+                                        <x:String>Cartago</x:String>
+                                        <x:String>Heredia</x:String>
+                                        <x:String>Guanacaste</x:String>
+                                        <x:String>Puntarenas</x:String>
+                                        <x:String>Limón</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Dificultad" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="5">
+                            <Picker SelectedItem="{Binding TourActual.Dificultad}" Title="Seleccione" TitleColor="#666" TextColor="White">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Fácil</x:String>
+                                        <x:String>Media</x:String>
+                                        <x:String>Alta</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Precios Nacional y Extranjero -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Precio Nacional (CRC)" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                            <Entry Text="{Binding TourActual.PrecioNacional}" Keyboard="Numeric" Placeholder="Ej. 10000" TextColor="White" PlaceholderColor="#666"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Precio Extranjero (USD)" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                            <Entry Text="{Binding TourActual.PrecioExtranjero}" Keyboard="Numeric" Placeholder="Ej. 50" TextColor="White" PlaceholderColor="#666"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Duración e Idiomas -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Duración (Horas)" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                            <Entry Text="{Binding TourActual.DuracionHoras}" Keyboard="Numeric" Placeholder="Ej. 3" TextColor="White" PlaceholderColor="#666"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Idiomas" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                            <Entry Text="{Binding TourActual.Idiomas}" Placeholder="Ej. Español, Inglés" TextColor="White" PlaceholderColor="#666"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Plazas y Guías Adicionales -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Plazas Disponibles" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                            <Entry Text="{Binding TourActual.PlazasDisponibles}" Keyboard="Numeric" Placeholder="Ej. 15" TextColor="White" PlaceholderColor="#666"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Guías Adicionales" TextColor="#A0A0A0" FontSize="13"/>
+                        <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                            <Entry Text="{Binding TourActual.GuiasAdicionales}" Placeholder="Opcional" TextColor="White" PlaceholderColor="#666"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Fecha y Hora (Visual) -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Fecha y Hora (Visual)" TextColor="#A0A0A0" FontSize="13"/>
+                    <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                        <Entry Text="{Binding TourActual.FechaHoraVisual}" Placeholder="Ej. 27 Septiembre 2026 - 9:00am" TextColor="White" PlaceholderColor="#666"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Descripción Corta -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Descripción Corta (Tarjeta)" TextColor="#A0A0A0" FontSize="13"/>
+                    <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                        <Editor Text="{Binding TourActual.DescripcionCorta}" Placeholder="Resumen visible en la lista..." HeightRequest="70" TextColor="White" PlaceholderColor="#666"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Descripción Larga -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Descripción Larga (Detalle de Reserva)" TextColor="#A0A0A0" FontSize="13"/>
+                    <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                        <Editor Text="{Binding TourActual.DescripcionLarga}" Placeholder="Información completa..." HeightRequest="90" TextColor="White" PlaceholderColor="#666"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Punto de Encuentro -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Punto de Encuentro" TextColor="#A0A0A0" FontSize="13"/>
+                    <Border BackgroundColor="#1C2520" Stroke="#33FFFFFF" StrokeShape="RoundRectangle 8" Padding="10,5">
+                        <Entry Text="{Binding TourActual.PuntoEncuentro}" Placeholder="Ej. Parque central, costado norte..." TextColor="White" PlaceholderColor="#666"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- BOTONES DE ACCIÓN: Guardar y Eliminar -->
+                <VerticalStackLayout Spacing="10" Margin="0,15,0,25">
+                    <!-- Botón Guardar Tour (Verde) -->
+                    <Button Text="Guardar Tour"
+                            BackgroundColor="#93C94A"
+                            TextColor="#0A140E"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            CornerRadius="12"
+                            Clicked="OnGuardarClicked"/>
+
+                    <!-- Botón Eliminar Tour (Rojo) -->
+                    <Button Text="Eliminar Tour"
+                            BackgroundColor="#D32F2F"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HeightRequest="50"
+                            CornerRadius="12"
+                            Clicked="OnEliminarClicked"/>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
