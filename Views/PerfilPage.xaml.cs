@@ -33,9 +33,7 @@ public partial class PerfilPage : ContentPage
 
                 if (usuarioModel != null)
                 {
-                    // =========================================================
-                    // CORRECCIÓN CLAVE 1: Guardar el usuario actual en la sesión global
-                    // =========================================================
+                    
                     SesionService.UsuarioActual = usuarioModel;
 
                     txtNombre.Text = usuarioModel.Nombre;
@@ -147,13 +145,13 @@ public partial class PerfilPage : ContentPage
         {
             try
             {
-                // 1. Cerrar sesión en Firebase
+                // Cierra sesion en firebase
                 await CrossFirebaseAuth.Current.SignOutAsync();
 
-                // 2. Limpiar la sesión global por completo
+                // Limpia la sesion global con un null
                 SesionService.UsuarioActual = null;
 
-                // 3. DESTRUIR EL SHELL: Reemplazar la página principal por una nueva instancia del Login
+                // Reemplaza la pagina principal por una nueva instancia del Login
                 Application.Current.MainPage = new NavigationPage(new LoginPage());
             }
             catch (Exception ex)
