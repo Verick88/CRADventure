@@ -2,66 +2,135 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CRadventure.Views.AdminPage"
-             Title="Panel de Administración">
+             NavigationPage.HasNavigationBar="False">
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+    <Grid>
+        <!-- Fondo de pantalla idéntico al resto de la app -->
+        <Image Source="mapa_fondo1.png" 
+               Aspect="AspectFill" 
+               HorizontalOptions="Fill" 
+               VerticalOptions="Fill"/>
 
-        <Label Text="Gestión de Permisos" FontSize="24" FontAttributes="Bold" />
-        <Label Text="Escribe el correo del usuario para buscarlo:" />
+        <BoxView BackgroundColor="#CC0A140E" />
 
-        <!-- CORRECCIÓN 1: Aquí cambiamos Spacing por ColumnSpacing -->
-        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
-            <Entry x:Name="txtEmailBusqueda" 
-                   Grid.Column="0"
-                   Placeholder="correo@ejemplo.com" />
+        <ScrollView Padding="20">
+            <VerticalStackLayout Spacing="25">
 
-            <!-- Le agregamos Clicked="OnBuscarClicked" para que sepa qué hacer al tocarlo -->
-            <Button x:Name="btnBuscar"
-                    Grid.Column="1"
-                    Text="Buscar" 
-                    Clicked="OnBuscarClicked"
-                    BackgroundColor="#3b3b98"
-                    TextColor="White"/>
-        </Grid>
-
-        <!-- Tarjeta de Resultados (Oculta por defecto) -->
-        <Frame x:Name="frmResultado" 
-               IsVisible="False" 
-               CornerRadius="10" 
-               Padding="15" 
-               BorderColor="LightGray">
-
-            <VerticalStackLayout Spacing="10">
-                <Label Text="Usuario Encontrado:" FontAttributes="Bold" FontSize="18"/>
-
-                <!-- vacías porque las llenaremos desde el código -->
-                <Label x:Name="lblNombreUsuario" FontSize="16"/>
-                <Label x:Name="lblCorreoUsuario" TextColor="Gray" FontSize="14"/>
-
-                <!-- "Rol actual: cliente" en una sola línea -->
-                <HorizontalStackLayout Spacing="5">
-                    <Label Text="Rol actual:" FontAttributes="Bold"/>
-                    <Label x:Name="lblRolActual" TextColor="#3b3b98" FontAttributes="Bold"/>
-                </HorizontalStackLayout>
-
-                <!-- CORRECCIÓN 2: Aquí también cambiamos Spacing por ColumnSpacing -->
-                <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,15,0,0">
+                <!-- Cabecera con Botón Volver y Título -->
+                <Grid ColumnDefinitions="Auto, *" VerticalOptions="Center" Margin="0,0,0,5">
                     <Button Grid.Column="0"
-                            Text="Hacer Cliente"
-                            Clicked="OnRevocarClicked"
-                            BackgroundColor="#EF4444"
+                            Text="←"
+                            FontSize="20"
+                            FontAttributes="Bold"
                             TextColor="White"
-                            FontAttributes="Bold"/>
+                            BackgroundColor="Transparent"
+                            Clicked="OnVolverClicked"
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            HorizontalOptions="Start"/>
 
-                    <Button Grid.Column="1"
-                            Text="Hacer Guía"
-                            Clicked="OnAscenderClicked"
-                            BackgroundColor="#93C94A"
-                            TextColor="#0A140E"
-                            FontAttributes="Bold"/>
+                    <Label Grid.Column="1"
+                           Text="Panel de Administración"
+                           TextColor="White"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Start"/>
                 </Grid>
-            </VerticalStackLayout>
-        </Frame>
 
-    </VerticalStackLayout>
+                <!-- Sección de Búsqueda -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Gestión de Permisos" 
+                           TextColor="White" 
+                           FontSize="18" 
+                           FontAttributes="Bold" />
+
+                    <Label Text="Escribe el correo del usuario para buscarlo:" 
+                           TextColor="#B0BEC5" 
+                           FontSize="13"/>
+
+                    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" Margin="0,5,0,0">
+                        <Entry x:Name="txtEmailBusqueda" 
+                               Grid.Column="0"
+                               Placeholder="correo@ejemplo.com"
+                               TextColor="White"
+                               PlaceholderColor="#607D8B"
+                               BackgroundColor="#1C2520"
+                               HeightRequest="45"/>
+
+                        <Button x:Name="btnBuscar"
+                                Grid.Column="1"
+                                Text="Buscar" 
+                                Clicked="OnBuscarClicked"
+                                BackgroundColor="#93C94A"
+                                TextColor="#0A140E"
+                                FontAttributes="Bold"
+                                HeightRequest="45"
+                                CornerRadius="8"
+                                Padding="20,0"/>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Tarjeta de Resultados Estilizada (Oculta por defecto) -->
+                <Frame x:Name="frmResultado" 
+                       IsVisible="False" 
+                       CornerRadius="12" 
+                       Padding="20" 
+                       BackgroundColor="#1C2520"
+                       BorderColor="#2D3B32"
+                       HasShadow="True">
+
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Usuario Encontrado" 
+                               FontAttributes="Bold" 
+                               FontSize="16"
+                               TextColor="#93C94A"/>
+
+                        <BoxView HeightRequest="1" BackgroundColor="#2D3B32" Margin="0,0,0,5"/>
+
+                        <Label x:Name="lblNombreUsuario" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"/>
+
+                        <Label x:Name="lblCorreoUsuario" 
+                               TextColor="#607D8B" 
+                               FontSize="14"/>
+
+                        <!-- Rol actual -->
+                        <HorizontalStackLayout Spacing="6" Margin="0,5,0,5">
+                            <Label Text="Rol actual:" 
+                                   TextColor="#B0BEC5"
+                                   FontAttributes="Bold"/>
+                            <Label x:Name="lblRolActual" 
+                                   TextColor="#93C94A" 
+                                   FontAttributes="Bold"/>
+                        </HorizontalStackLayout>
+
+                        <!-- Botones de Acción -->
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,10,0,0">
+                            <Button Grid.Column="0"
+                                    Text="Hacer Cliente"
+                                    Clicked="OnRevocarClicked"
+                                    BackgroundColor="#EF4444"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    HeightRequest="45"
+                                    CornerRadius="8"/>
+
+                            <Button Grid.Column="1"
+                                    Text="Hacer Guía"
+                                    Clicked="OnAscenderClicked"
+                                    BackgroundColor="#93C94A"
+                                    TextColor="#0A140E"
+                                    FontAttributes="Bold"
+                                    HeightRequest="45"
+                                    CornerRadius="8"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

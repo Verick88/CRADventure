@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CRadventure.Views.EditarGuiasPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <Image Source="dashboard.png" 
+               Aspect="AspectFill" 
+               HorizontalOptions="Fill" 
+               VerticalOptions="Fill"/>
+
+        <BoxView BackgroundColor="#CC0A140E" />
+
+        <!-- Contenedor Principal en Grid con 3 filas: Botón Volver/Título, Búsqueda y Lista -->
+        <Grid RowDefinitions="Auto, Auto, *" Margin="15" RowSpacing="10">
+
+            <!-- Fila 0: BOTÓN VOLVER Y TÍTULO -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto, *" ColumnSpacing="10">
+                <!-- Botón Volver -->
+                <Button Grid.Column="0"
+                        Text="◀"
+                        TextColor="White"
+                        BackgroundColor="#1C2520"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        CornerRadius="8"
+                        Clicked="OnVolverClicked"/>
+
+                <!-- Título -->
+                <Border Grid.Column="1"
+                        BackgroundColor="#1C2520"
+                        Stroke="#33FFFFFF"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="15,10"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Center">
+                    <Label Text="Gestión de Tours"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"/>
+                </Border>
+            </Grid>
+
+            <!-- Fila 1: BARRA DE BÚSQUEDA POR TÍTULO -->
+            <SearchBar Grid.Row="1"
+                       Placeholder="Buscar por título..."
+                       Text="{Binding TextoBusqueda}"
+                       TextColor="White"
+                       PlaceholderColor="#A0A0A0"
+                       BackgroundColor="#1C2520"
+                       CancelButtonColor="White"
+                       HeightRequest="48" />
+
+            <!-- Fila 2: LISTA DE TOURS FILTRADOS -->
+            <CollectionView Grid.Row="2"
+                            x:Name="cvMisTours"
+                            ItemsSource="{Binding ToursList}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnTourSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,6" 
+                                BackgroundColor="#1C2520" 
+                                Stroke="#33FFFFFF"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 20"
+                                Padding="15">
+
+                            <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="10" RowSpacing="6">
+
+                                <!-- Nombre del Lugar -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding NombreLugar}" 
+                                       TextColor="White" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold"/>
+
+                                <!-- Provincia -->
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding Provincia}" 
+                                       TextColor="#4DB6AC" 
+                                       FontSize="13" 
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="End"/>
+
+                                <!-- Fecha -->
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding FechaHoraVisual}" 
+                                       TextColor="#B0BEC5" 
+                                       FontSize="12"/>
+
+                                <!-- Precio y Guía -->
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       Text="{Binding PrecioVisual}" 
+                                       TextColor="#93C94A" 
+                                       FontSize="14" 
+                                       FontAttributes="Bold"/>
+
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding GuiaAsociado}"
+                                       TextColor="#FFD700"
+                                       FontSize="12"
+                                       HorizontalOptions="End"/>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+    </Grid>
+</ContentPage>

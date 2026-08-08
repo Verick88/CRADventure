@@ -88,4 +88,9 @@ public partial class AdminPage : ContentPage
             await DisplayAlert("Éxito", "Permisos otorgados. El usuario ahora es un Guía.", "OK");
         }
     }
+
+    private async void OnVolverClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync(); 
+    }
 }

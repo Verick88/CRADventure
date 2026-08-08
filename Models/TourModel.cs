@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Plugin.Firebase.Firestore;
-
 namespace CRadventure.Models
+
 {
+
     public class TourModel
+
     {
         [FirestoreDocumentId]
         public string Id { get; set; } = string.Empty;
@@ -57,14 +58,15 @@ namespace CRadventure.Models
 
         [FirestoreProperty("fechaTour")]
         public string FechaHoraVisual { get; set; } = "Fecha por definir";
+
         public string PrecioVisual { get; set; } = string.Empty;
 
         public void AplicarTarifa(bool esExtranjero)
         {
             double precioFinal = esExtranjero ? PrecioExtranjero : PrecioNacional;
             PrecioVisual = esExtranjero
-                ? $"${precioFinal:F2} USD"
-                : $"₡{precioFinal:N0} CRC";
+            ? $"${precioFinal:F2} USD"
+            : $"₡{precioFinal:N0} CRC";
         }
 
         public string IdiomasTexto { get; set; } = string.Empty;
@@ -73,7 +75,7 @@ namespace CRadventure.Models
         public string DuracionVisual => $"{DuracionHoras} hrs";
         private DateTime _fechaTour;
 
-        
-        
     }
+
 }
+

@@ -224,15 +224,28 @@
 
         </Grid>
 
-        <!-- Botón flotante para agregar tour -->
-        <ImageButton x:Name="btnAgregarTour"
-                     Source="editar.png" 
-                     WidthRequest="70" 
-                     HeightRequest="70"
-                     HorizontalOptions="End" 
-                     VerticalOptions="End"
-                     Margin="30"
-                     BackgroundColor="Transparent"
-                     Clicked="AgregarTour" />
+        <!-- Botones Flotantes en la esquina inferior derecha -->
+        <VerticalStackLayout HorizontalOptions="End" 
+                             VerticalOptions="End" 
+                             Margin="20" 
+                             Spacing="10">
+
+            <!-- Botón para Editar Guías -->
+            <ImageButton x:Name="btnEditarGuias"
+                         Source="editar_guias.png" 
+                         WidthRequest="60" 
+                         HeightRequest="60"
+                         BackgroundColor="Transparent"
+                         Clicked="OnEditarGuiasClicked" />
+
+            <!-- Botón para Agregar Tour -->
+            <ImageButton x:Name="btnAgregarTour"
+                         Source="editar.png" 
+                         WidthRequest="60" 
+                         HeightRequest="60"
+                         BackgroundColor="Transparent"
+                         Clicked="AgregarTour" />
+
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -36,7 +36,7 @@ public partial class TourPage : ContentPage
         _usuarioActual = SesionService.UsuarioActual;
         BindingContext = this;
 
-        // Ocultar el botón si el usuario es cliente 
+        // Ocultar el botón agregar tour si el usuario es cliente 
         if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
         {
             btnAgregarTour.IsVisible = true;
@@ -46,8 +46,20 @@ public partial class TourPage : ContentPage
             btnAgregarTour.IsVisible = false;
         }
 
+        // Ocultar el botón si el usuario es cliente 
+        if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
+        {
+            btnEditarGuias.IsVisible = true;
+        }
+        else
+        {
+            btnEditarGuias.IsVisible = false;
+        }
+
         CargarTours();
     }
+
+
 
     private string _filtroProvinciaSeleccionada;
     private string _filtroDificultadSeleccionada;
@@ -191,6 +203,18 @@ public partial class TourPage : ContentPage
         foreach (var tour in resultados)
         {
             ToursFiltrados.Add(tour);
+        }
+    }
+
+    private async void OnEditarGuiasClicked(object sender, EventArgs e)
+    {
+        if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
+        {
+            await Shell.Current.GoToAsync(nameof(EditarGuiasPage));
+        }
+        else
+        {
+            await DisplayAlert("Acceso", "Solo los guías pueden agregar tours", "OK");
         }
     }
 }
