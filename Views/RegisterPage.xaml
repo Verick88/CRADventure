@@ -8,12 +8,14 @@
     Title="RegisterPage">
 
     <Grid>
+        <!-- Imagen de fondo que cubre toda la pantalla -->
         <Image
             Source="b1.png"
             Aspect="AspectFill"
             HorizontalOptions="Fill"
             VerticalOptions="Fill"/>
 
+        <!-- Capa de degradado oscuro sobre la imagen -->
         <BoxView 
             HorizontalOptions="Fill" 
             VerticalOptions="Fill">
@@ -21,15 +23,9 @@
                 <LinearGradientBrush 
                     StartPoint="0,0" 
                     EndPoint="0,1">
-                    <GradientStop 
-                        Color="#30050A06" 
-                        Offset="0.0" />
-                    <GradientStop 
-                        Color="#CC09130B" 
-                        Offset="0.5" />
-                    <GradientStop 
-                        Color="#FA050A06" 
-                        Offset="1.0" />
+                    <GradientStop Color="#30050A06" Offset="0.0" />
+                    <GradientStop Color="#CC09130B" Offset="0.5" />
+                    <GradientStop Color="#FA050A06" Offset="1.0" />
                 </LinearGradientBrush>
             </BoxView.Background>
         </BoxView>
@@ -40,6 +36,7 @@
                 VerticalOptions="CenterAndExpand" 
                 Padding="24,30,24,30">
 
+                <!-- Tarjeta central -->
                 <Border
                     Padding="18,20,18,20"
                     BackgroundColor="#C8070F0A"
@@ -51,9 +48,11 @@
                         <RoundRectangle CornerRadius="20"/>
                     </Border.StrokeShape>
 
+                    <!-- Pila vertical para ordenar de arriba a abajo todos los campos -->
                     <VerticalStackLayout 
                         Spacing="11">
 
+                        <!-- Encabezado con titulo y subtitulo -->
                         <VerticalStackLayout 
                             Spacing="2" 
                             HorizontalOptions="Center">
@@ -83,15 +82,18 @@
                                 HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
 
+                        <!-- Linea decorativa -->
                         <BoxView 
                             HeightRequest="1" 
                             BackgroundColor="#10FFFFFF" 
                             HorizontalOptions="Fill" 
                             Margin="5,2,5,2"/>
 
+                        <!-- Fila doble para colocar Nombre y Apellidos lado a lado -->
                         <Grid 
                             ColumnDefinitions="*, *" 
                             ColumnSpacing="10">
+                            <!-- Ingresar Nombre -->
                             <Border 
                                 Padding="12,0" 
                                 HeightRequest="40" 
@@ -110,6 +112,7 @@
                                     FontFamily="MontserratRegular" 
                                     VerticalTextAlignment="Center"/>
                             </Border>
+                            <!-- Ingresar Apellidos -->
                             <Border 
                                 Grid.Column="1" 
                                 Padding="12,0" 
@@ -131,6 +134,7 @@
                             </Border>
                         </Grid>
 
+                        <!-- Ingresar correo -->
                         <Border 
                             Padding="12,0" 
                             HeightRequest="40" 
@@ -151,6 +155,7 @@
                                 VerticalTextAlignment="Center"/>
                         </Border>
 
+                        <!-- Ingresar telefono -->
                         <Border 
                             Padding="12,0" 
                             HeightRequest="40" 
@@ -171,6 +176,7 @@
                                 VerticalTextAlignment="Center"/>
                         </Border>
 
+                        <!-- Ingresar Password -->
                         <Border 
                             Padding="12,0" 
                             HeightRequest="40" 
@@ -193,7 +199,7 @@
                                     FontFamily="MontserratRegular" 
                                     VerticalTextAlignment="Center"/>
 
-                                <!-- Boton ojo para password -->
+                                <!-- Botón de imagen para password -->
                                 <Grid Grid.Column="1" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,5,0">
                                     <ImageButton 
                                         x:Name="btnOjoPassword"
@@ -203,11 +209,12 @@
                                         Aspect="AspectFit"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"
-                                        Clicked="OnTogglePassword_Clicked"/>
+                                        Clicked="Password_Clicked"/>
                                 </Grid>
                             </Grid>
                         </Border>
 
+                        <!-- Confirmacion de password -->
                         <Border 
                             Padding="12,0" 
                             HeightRequest="40" 
@@ -229,8 +236,8 @@
                                     FontSize="13" 
                                     FontFamily="MontserratRegular" 
                                     VerticalTextAlignment="Center"/>
-                                
-                                <!-- Boton ojo para confirmar password -->
+
+                                <!-- Bototon de imagen para confirmar password -->
                                 <Grid Grid.Column="1" WidthRequest="30" HeightRequest="30" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,5,0">
                                     <ImageButton 
                                         x:Name="btnOjoConfirmPassword"
@@ -240,11 +247,12 @@
                                         Aspect="AspectFit"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"
-                                        Clicked="OnToggleConfirmPassword_Clicked"/>
+                                        Clicked="ConfirmPassword_Clicked"/>
                                 </Grid>
                             </Grid>
                         </Border>
 
+                        <!-- Switch para conocer si el usuario es extranjero -->
                         <Grid 
                             ColumnDefinitions="*, Auto" 
                             Margin="5,0">
@@ -263,6 +271,7 @@
                                 VerticalOptions="Center"/>
                         </Grid>
 
+                        <!-- Boton principal de registro con indicador de carga -->
                         <Grid 
                             HeightRequest="42">
                             <Button 
@@ -273,7 +282,7 @@
                                 BackgroundColor="#93C94A" 
                                 TextColor="#0A140E" 
                                 CornerRadius="8" 
-                                Clicked="OnRegistrar_Clicked"/>
+                                Clicked="Registrar_Clicked"/>
                             <ActivityIndicator 
                                 x:Name="loadingIndicator" 
                                 IsRunning="False" 
@@ -283,6 +292,7 @@
                                 VerticalOptions="Center"/>
                         </Grid>
 
+                        <!-- Boton para volver -->
                         <Button 
                             Text="Volver" 
                             HeightRequest="40" 
@@ -293,7 +303,7 @@
                             TextColor="#93C94A" 
                             FontFamily="MontserratBold" 
                             FontSize="12" 
-                            Clicked="OnVolver_Clicked"/>
+                            Clicked="Volver_Clicked"/>
 
                     </VerticalStackLayout>
                 </Border>

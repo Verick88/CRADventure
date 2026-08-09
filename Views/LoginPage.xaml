@@ -202,7 +202,7 @@
                             FontSize="11"
                             Margin="0,2,0,0">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnOlvidastePasswordTapped" />
+                                <TapGestureRecognizer Tapped="OlvidastePassword" />
                             </Label.GestureRecognizers>
                         </Label>
                     </VerticalStackLayout>

@@ -134,7 +134,7 @@ public partial class LoginPage : ContentPage
     }
 
     // Método para recuperar contraseña
-    private async void OnOlvidastePasswordTapped(object sender, EventArgs e)
+    private async void OlvidastePassword(object sender, EventArgs e)
     {
         string email = await DisplayPromptAsync("Recuperar Contraseña", "Ingresa tu correo electrónico registrado:", "Enviar", "Cancelar", keyboard: Keyboard.Email);
 

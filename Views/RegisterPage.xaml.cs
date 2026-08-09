@@ -11,8 +11,8 @@ public partial class RegisterPage : ContentPage
 		InitializeComponent();
 	}
 
-    // --- Métodos de visibilidad de contraseña ---
-    private void OnTogglePassword_Clicked(object sender, EventArgs e)
+    //Metodo para ver ocultar password
+    private void Password_Clicked(object sender, EventArgs e)
     {
         txtPassword.IsPassword = !txtPassword.IsPassword;
         if (txtPassword.IsPassword)
@@ -24,7 +24,8 @@ public partial class RegisterPage : ContentPage
             btnOjoPassword.Source = "ver.png";
         }
     }
-    private void OnToggleConfirmPassword_Clicked(object sender, EventArgs e)
+
+    private void ConfirmPassword_Clicked(object sender, EventArgs e)
     {
         txtConfirmPassword.IsPassword = !txtConfirmPassword.IsPassword;
         if (txtConfirmPassword.IsPassword)
@@ -37,7 +38,7 @@ public partial class RegisterPage : ContentPage
         }
     }
     //Boton regresar
-    private async void OnVolver_Clicked(object sender, EventArgs e)
+    private async void Volver_Clicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
@@ -71,10 +72,10 @@ public partial class RegisterPage : ContentPage
         return true;
     }
 
-    // --- Botón de Registro con UI de carga ---
-    private async void OnRegistrar_Clicked(object sender, EventArgs e)
+    // Boton de registro con carga
+    private async void Registrar_Clicked(object sender, EventArgs e)
     {
-        if (!ValidarCampos())
+        if (!ValidarCampos()) //Llama las validaciones, si falla algo cae en el return
             return;
 
         // Activar indicador de carga
@@ -85,9 +86,11 @@ public partial class RegisterPage : ContentPage
 
         try
         {
+            //Se crea un nuevo usuario con el servicio CreateUser
             var auth = CrossFirebaseAuth.Current;
             var authResult = await auth.CreateUserAsync(txtCorreo.Text, txtPassword.Text);
 
+            //Arma el objeto del usuario
             var nuevoUsuario = new UsuarioModel
             {
                 Uid = authResult.Uid,
@@ -101,13 +104,14 @@ public partial class RegisterPage : ContentPage
                 FechaRegistro = DateTime.UtcNow
             };
 
+            //guarda los datos del usuario en el servicio
             var service = new UsuarioService();
             await service.GuardarUsuarioAsync(nuevoUsuario);
 
             SesionService.UsuarioActual = nuevoUsuario;
 
             await DisplayAlert("Éxito", "Cuenta creada correctamente", "OK");
-            await Shell.Current.GoToAsync("//TourPage");
+            await Shell.Current.GoToAsync("//TourPage"); //Lo envia al tourpage
         }
         catch (Exception ex)
         {
