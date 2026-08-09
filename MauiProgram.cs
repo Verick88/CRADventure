@@ -57,13 +57,14 @@ public class MapReadyCallbackCustom : Java.Lang.Object, Android.Gms.Maps.IOnMapR
         _googleMap = googleMap;
         if (_mauiMap == null) return;
 
+        //Limitar a costa rica
         var costaRicaBounds = new Android.Gms.Maps.Model.LatLngBounds(
-            new Android.Gms.Maps.Model.LatLng(8.2, -85.6),
-            new Android.Gms.Maps.Model.LatLng(11.2, -82.5)
+            new Android.Gms.Maps.Model.LatLng(7.8, -86.3),
+            new Android.Gms.Maps.Model.LatLng(11.5, -82.5)
         );
 
         _googleMap.SetLatLngBoundsForCameraTarget(costaRicaBounds);
-        _googleMap.SetMinZoomPreference(8.5f);
+        _googleMap.SetMinZoomPreference(7.5f);
         _googleMap.UiSettings.RotateGesturesEnabled = false;
 
         // Dibujamos los pines iniciales
