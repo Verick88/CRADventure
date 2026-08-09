@@ -22,31 +22,33 @@ public partial class LoginPage : ContentPage
     }
 
     // Toggle para mostrar/ocultar contraseña
-    private void OnTogglePassword_Clicked(object sender, EventArgs e)
+    //sender = El botón de "Mostrar/Ocultar contraseña" al que acaban de hacer clic. 
+    //EventArgs e = Los datos técnicos del clic (Requisito obligatorio para el sistema).
+    private void Password_Clicked(object sender, EventArgs e) 
     {
-        txtPassword.IsPassword = !txtPassword.IsPassword;
+        txtPassword.IsPassword = !txtPassword.IsPassword; //Invierte el estado del password (para verla)
 
         if (txtPassword.IsPassword)
         {
-            btnOjo.Source = "ver.png";
+            btnOjo.Source = "ver.png";//Si el password no esta visible, se muestra la imagen de ver
         }
         else
         {
-            btnOjo.Source = "ocultar.png";
+            btnOjo.Source = "ocultar.png"; //Si el password esta visible, se muestra la imagen de ocultar
         }
     }
 
-    // Método principal de inicio de sesión con UI de carga
-    private async void OnIniciarViaje_Clicked(object sender, EventArgs e)
+    // Método principal de inicio de sesión con carga
+    private async void IniciarViaje(object sender, EventArgs e)
     {
-        // 1. Validar campos antes de proceder
+        // Validar campos (que el correo y el password no sean nulos)
         if (string.IsNullOrWhiteSpace(txtCorreo.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
         {
             await DisplayAlert("Error", "Por favor completa todos los campos", "OK");
             return;
         }
 
-        // 2. Activar indicador de carga
+        // Se activa el indicador de carga
         btnIniciar.Text = "";
         loadingIndicator.IsVisible = true;
         loadingIndicator.IsRunning = true;
@@ -56,17 +58,17 @@ public partial class LoginPage : ContentPage
         {
             var auth = CrossFirebaseAuth.Current;
 
-            // PREVENCIÓN: Forzar cierre de sesión previo para evitar que arrastre datos anteriores
+            // Forzar cierre de sesión previo para evitar que arrastre datos anteriores (Cuando se cierra sesion)
             try
             {
-                await auth.SignOutAsync();
+                await auth.SignOutAsync(); //Ordena a Firebase que cierre la sesión activa del usuario en la nube.
             }
             catch
             {
-                // Si no habia sesiòn activa, ignoramos el error y continuamos 
+                //Si no habia una sesion activa, se ignora el error
             }
 
-            // Limpiar también el servicio de sesión en memoria por seguridad
+            //Limpia el servicio de sesion en memoria
             SesionService.UsuarioActual = null;
 
             // Autenticar con el nuevo usuario
@@ -78,13 +80,13 @@ public partial class LoginPage : ContentPage
                 return;
             }
 
-            // Obtener el rol del usuario desde Firestore
+            //Crea una instancia del servicio de usuarios y busca en firestore si ya existe un documento con el Uid del usuario que acaba de iniciar sesión.
             var service = new UsuarioService();
             var usuario = await service.ObtenerUsuarioPorUidAsync(user.Uid);
 
+            //Por si la autenticacion de firebase dejo entrar a un usuario pero su documento de firestore no existia, lo crea automaticamente
             if (usuario == null)
             {
-                // Si el usuario existe en Auth pero no en Firestore, lo creamos automáticamente
                 usuario = new UsuarioModel
                 {
                     Uid = user.Uid,
@@ -107,7 +109,7 @@ public partial class LoginPage : ContentPage
             // Se guarda el usuario con el servicio de sesion
             SesionService.UsuarioActual = usuario;
 
-            // Navegar según el rol cargando el AppShell completo
+            // Navegar según el rol 
             if (usuario.Rol == "admin" || usuario.Rol == "guia" || usuario.Rol == "cliente")
             {
                 Application.Current.MainPage = new AppShell();
@@ -123,7 +125,7 @@ public partial class LoginPage : ContentPage
         }
         finally
         {
-            // 3. Restaurar botón al finalizar (éxito o error)
+            //Restaurar botón al finalizar 
             loadingIndicator.IsVisible = false;
             loadingIndicator.IsRunning = false;
             btnIniciar.Text = "Iniciar viaje";

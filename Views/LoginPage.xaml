@@ -7,14 +7,14 @@
     Shell.NavBarIsVisible="False">
 
     <Grid>
-        <!-- Imagen de fondo que cubre toda la pantalla -->
+        <!-- Imagen de fondo  -->
         <Image
             Source="a3.png"
             Aspect="AspectFill"
             HorizontalOptions="Fill"
             VerticalOptions="Fill" />
         
-        <!-- Capa de degradadi oscuro sobre la imagen para mejorar el contraste de los textos-->
+        <!-- Capa de degradado oscuro sobre la imagen para mejorar el contraste de los textos-->
         <BoxView HorizontalOptions="Fill" VerticalOptions="Fill">
             <BoxView.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -25,13 +25,13 @@
             </BoxView.Background>
         </BoxView>
         
-        <!-- Contenedor con desplazamiento vertical para evitar problemas con el teclado-->
+        <!-- Contenedor con desplazamiento vertical -->
         <ScrollView VerticalOptions="FillAndExpand">
             
             <!-- Contenedor para centrar la tarjeta de inicio de sesion-->
             <Grid VerticalOptions="CenterAndExpand" Padding="24,30,24,30">
 
-                <!-- Tarjeta contenedora principal con bordes redondeados y fondo semitransparente -->
+                <!-- Tarjeta principal  -->
                 <Border
                     Padding="20,22,20,22"
                     BackgroundColor="#C8070F0A"
@@ -45,7 +45,7 @@
 
                     <VerticalStackLayout Spacing="14">
                         
-                        <!-- Sección de Título y Subtítulo de la App -->
+                        <!-- Titulo y subtitulo de la app -->
                         <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
                             <Label
                                 Text="CRADVENTURE"
@@ -70,14 +70,14 @@
                                 HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
                         
-                        <!-- Línea divisoria decorativa -->
+                        <!-- Linea divisora decorativa -->
                         <BoxView
                             HeightRequest="1"
                             BackgroundColor="#10FFFFFF"
                             HorizontalOptions="Fill"
                             Margin="5,2,5,2"/>
 
-                        <!-- Sección de Bienvenida al usuario -->
+                        <!-- Bienvenida al usuario -->
                         <VerticalStackLayout Spacing="2" Margin="0,0,0,5">
                             <Label
                                 Text="Bienvenido"
@@ -94,7 +94,7 @@
                                 HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
 
-                        <!-- Campo de entrada para el Correo Electrónico -->
+                        <!-- Campo para ingresar correo -->
                         <Border
                             Padding="12,0"
                             HeightRequest="42"
@@ -115,7 +115,7 @@
                                 VerticalTextAlignment="Center"/>
                         </Border>
 
-                        <!-- Campo de entrada para la Contraseña con botón integrado para ver/ocultar -->
+                        <!-- Campo para ingresar password con el boton para ocultar y ver password -->
                         <Border
                             Padding="12,0"
                             HeightRequest="42"
@@ -137,7 +137,6 @@
                                     FontFamily="MontserratRegular"
                                     VerticalTextAlignment="Center"/>
                                 
-                                <!-- Nuevo contenedor para reducir el tamano de la imagen -->
                                 <Grid Grid.Column="1" 
                                     WidthRequest="30" 
                                     HeightRequest="30" 
@@ -153,13 +152,13 @@
                                         Aspect="AspectFit"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"
-                                        Clicked="OnTogglePassword_Clicked"/>
+                                        Clicked="Password_Clicked"/>
 
                                 </Grid>
                             </Grid>
                         </Border>
 
-                        <!-- Botón principal de Iniciar Sesión y su indicador de carga -->
+                        <!-- Boton iniciar sesion con indicador de carga -->
                         <Grid>
                             <Button
                                 x:Name="btnIniciar"
@@ -171,7 +170,7 @@
                                 HeightRequest="42"
                                 CornerRadius="8"
                                 Margin="0,4,0,0"
-                                Clicked="OnIniciarViaje_Clicked"/>
+                                Clicked="IniciarViaje"/>
                             <ActivityIndicator 
                                 x:Name="loadingIndicator" 
                                 IsRunning="False" 
@@ -181,7 +180,7 @@
                                 HorizontalOptions="Center"/>
                         </Grid>
                         
-                        <!-- Botón para redirigir al registro de cuentas nuevas -->
+                        <!-- Boton para ir al Register -->
                         <Button
                             Text="Crear cuenta"
                             HeightRequest="40"
@@ -194,7 +193,7 @@
                             FontSize="12"
                             Clicked="Registrar_Clicked"/>
 
-                        <!-- Enlace de texto para recuperar la contraseña en caso de olvido -->
+                        <!-- Enlace de texto para ir a "olvido su contrasena" -->
                         <Label
                             Text="¿Olvidaste tu contraseña?"
                             FontFamily="MontserratRegular"
