@@ -36,6 +36,10 @@ namespace CRadventure.Models
         [FirestoreProperty("fecha_registro")]
         public DateTimeOffset? FechaRegistro { get; set; }
 
+        //foto perfil
+        [FirestoreProperty("foto_url")]
+        public string FotoUrl { get; set; } = string.Empty;
+
         // Campos exclusivos del guia
         [FirestoreProperty("biografia")]
         public string Biografia { get; set; } = string.Empty;
@@ -46,8 +50,6 @@ namespace CRadventure.Models
         [FirestoreProperty("verificado")]
         public bool Verificado { get; set; }
 
-        // Campo para la foto de perfil
-        [FirestoreProperty("foto_url")]
-        public string FotoUrl { get; set; } = string.Empty;
+        
     }
 }

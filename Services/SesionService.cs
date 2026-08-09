@@ -10,6 +10,7 @@ namespace CRadventure.Services
 {
     public static class SesionService
     {
+        //Servicio para guardar la sesion
         public static UsuarioModel UsuarioActual { get; set; }
     }
 }

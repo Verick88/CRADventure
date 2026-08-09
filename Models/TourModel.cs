@@ -63,17 +63,18 @@ namespace CRadventure.Models
 
         public void AplicarTarifa(bool esExtranjero)
         {
+            //condicion    Si es verdadero  : Si es falso
             double precioFinal = esExtranjero ? PrecioExtranjero : PrecioNacional;
             PrecioVisual = esExtranjero
+            //            F2 fuerza a mostrar 2 decimales
             ? $"${precioFinal:F2} USD"
+            //             N0 formato con separadores de miles y cero decimales
             : $"₡{precioFinal:N0} CRC";
         }
 
         public string IdiomasTexto { get; set; } = string.Empty;
-        public double Calificacion { get; set; } = 4.5; // Valor estático PRUEBA
 
         public string DuracionVisual => $"{DuracionHoras} hrs";
-        private DateTime _fechaTour;
 
     }
 
