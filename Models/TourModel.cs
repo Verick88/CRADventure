@@ -57,9 +57,9 @@ namespace CRadventure.Models
         public string Idiomas { get; set; } = string.Empty;
 
         [FirestoreProperty("fechaTour")]
-        public string FechaHoraVisual { get; set; } = "Fecha por definir";
+        public string FechaHoraVisual { get; set; } = "Fecha por definir"; //TourPage
 
-        public string PrecioVisual { get; set; } = string.Empty;
+        public string PrecioVisual { get; set; } = string.Empty; //TourPage
 
         public void AplicarTarifa(bool esExtranjero)
         {
@@ -72,9 +72,9 @@ namespace CRadventure.Models
             : $"₡{precioFinal:N0} CRC";
         }
 
-        public string IdiomasTexto { get; set; } = string.Empty;
+        public string IdiomasTexto { get; set; } = string.Empty; //TourPage
 
-        public string DuracionVisual => $"{DuracionHoras} hrs";
+        public string DuracionVisual => $"{DuracionHoras} hrs"; //TourPage
 
     }
 

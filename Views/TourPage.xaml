@@ -5,6 +5,7 @@
              NavigationPage.HasNavigationBar="False">
 
     <Grid>
+        <!-- Imagen de fondo -->
         <Image Source="dashboard.png" 
                Aspect="AspectFill" 
                HorizontalOptions="Fill" 
@@ -12,10 +13,10 @@
 
         <BoxView BackgroundColor="#CC0A140E" />
 
-        <!-- Contenedor Principal en Grid con 3 filas: Título, Búsqueda y Lista -->
+        <!-- Contenedor principal con grid -->
         <Grid RowDefinitions="Auto, Auto, *" Margin="15" RowSpacing="10">
 
-            <!-- Fila 0: TÍTULO CENTRADO CON IMÁGENES -->
+            <!-- Fila 0: Tituklo centrado con las imagenes del mapa -->
             <Border Grid.Row="0"
                     BackgroundColor="#1C2520"
                     Stroke="#33FFFFFF"
@@ -54,10 +55,10 @@
                 </Grid>
             </Border>
 
-            <!-- Fila 1: BARRA SUPERIOR (Búsqueda y Filtros) -->
+            <!-- Fila 1: barra superior con la busqueda y los filtros -->
             <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="10">
 
-                <!-- Barra de búsqueda por título -->
+                <!-- Barra de busqueda por titulo -->
                 <SearchBar Grid.Column="0"
                            Placeholder="Buscar por título..."
                            Text="{Binding TextoBusqueda}"
@@ -67,7 +68,7 @@
                            CancelButtonColor="White"
                            HeightRequest="48" />
 
-                <!-- Botón de filtros con imagen -->
+                <!-- Boton de los filtros con imagen -->
                 <ImageButton Grid.Column="1"
                              Clicked="AbrirFiltros"
                              Source="filtro.png"
@@ -80,7 +81,7 @@
 
             </Grid>
 
-            <!-- Fila 2: Lista de Tours con Scroll habilitado -->
+            <!-- Fila 2: Lista de los tours con scroll -->
             <CollectionView Grid.Row="2"
                             x:Name="cvTours" 
                             ItemsSource="{Binding ToursFiltrados}"
@@ -99,14 +100,14 @@
 
                             <VerticalStackLayout Spacing="0">
 
-                                <!-- 1. IMAGEN Y ELEMENTOS FLOTANTES -->
+                                <!-- 1. Imagen y elementos flotantes -->
                                 <Grid HeightRequest="200">
                                     <Image Source="{Binding ImagenUrl}" 
                                            Aspect="AspectFill" 
                                            HeightRequest="200"
                                            HorizontalOptions="Fill"/>
 
-                                    <!-- ETIQUETA DE PLAZAS DISPONIBLES (Izquierda Arriba) -->
+                                    <!-- Etiqueta con las plazas disponibles para el tour -->
                                     <Border Stroke="Transparent"
                                             StrokeShape="RoundRectangle 8"
                                             Padding="8,4"
@@ -124,7 +125,7 @@
                                         </HorizontalStackLayout>
                                     </Border>
 
-                                    <!-- ETIQUETA DE DIFICULTAD -->
+                                    <!-- Etiqueta con la dificultad -->
                                     <Border Stroke="Transparent"
                                             StrokeShape="RoundRectangle 8"
                                             Padding="10,4"
@@ -151,7 +152,7 @@
                                         </Border.Triggers>
                                     </Border>
 
-                                    <!-- ETIQUETA DE PROVINCIA -->
+                                    <!-- Etiqueta de provincia -->
                                     <Border Stroke="Transparent"
                                             StrokeShape="RoundRectangle 8"
                                             Padding="8,4"
@@ -166,7 +167,7 @@
                                     </Border>
                                 </Grid>
 
-                                <!-- 2. CONTENIDO DE TEXTO -->
+                                <!-- 2. Contenido de texto -->
                                 <VerticalStackLayout Padding="15" Spacing="6">
 
                                     <Label Text="{Binding NombreLugar}" 
@@ -198,7 +199,7 @@
                                            MaxLines="2"
                                            LineBreakMode="TailTruncation"/>
 
-                                    <!-- Precio (Izquierda) y Duración en Horas (Derecha) -->
+                                    <!-- Precio y duracion en horas mas a la derecha-->
                                     <Grid ColumnDefinitions="*, Auto" Margin="0,6,0,0">
                                         <Label Grid.Column="0"
                                                Text="{Binding PrecioVisual}" 
@@ -224,21 +225,21 @@
 
         </Grid>
 
-        <!-- Botones Flotantes en la esquina inferior derecha -->
+        <!-- Botones flotantes para guia y admin -->
         <VerticalStackLayout HorizontalOptions="End" 
                              VerticalOptions="End" 
                              Margin="20" 
                              Spacing="10">
 
-            <!-- Botón para Editar Guías -->
+            <!-- Boton para editar guias -->
             <ImageButton x:Name="btnEditarGuias"
                          Source="editar_guias.png" 
                          WidthRequest="60" 
                          HeightRequest="60"
                          BackgroundColor="Transparent"
-                         Clicked="OnEditarGuiasClicked" />
+                         Clicked="EditarGuias" />
 
-            <!-- Botón para Agregar Tour -->
+            <!-- Boton para agregar tour -->
             <ImageButton x:Name="btnAgregarTour"
                          Source="editar.png" 
                          WidthRequest="60" 

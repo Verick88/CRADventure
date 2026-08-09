@@ -9,32 +9,32 @@ namespace CRadventure.Views;
 
 public partial class TourPage : ContentPage
 {
-    private readonly TourService _tourService = new TourService();
-    private readonly UsuarioModel _usuarioActual;
+    private readonly TourService _tourService = new TourService(); //Instancia privada para usar el TourService
+    private readonly UsuarioModel _usuarioActual; //Variable para almacenar la informacion del usuario que inicio sesion
 
-    // Lista original completa que traemos de Firebase
+    // Se trae la lista completa de los tours desde firebase
     private List<TourModel> _listaToursCompleta = new();
 
-    // Colección observable enlazada a tu CollectionView en el XAML
+    // Sublista dinamica que se muestra y actualiza en tiempo real para aplicar filtros
     public ObservableCollection<TourModel> ToursFiltrados { get; set; } = new();
 
-    // Propiedad para la barra de búsqueda enlazada al SearchBar
+    // Almacena el texto que el usuario va escribiendo en el buscador
     private string _textoBusqueda;
     public string TextoBusqueda
     {
-        get => _textoBusqueda;
-        set
+        get => _textoBusqueda; //Devuelve el valor guardado en _textoBusqueda
+        set //Se activa automaticamente cada vez que el usuario borra o escribe algo
         {
-            _textoBusqueda = value;
-            OnPropertyChanged();
-            FiltrarTours(); 
+            _textoBusqueda = value; //actualiza el _textoBusqueda con lo que el usuario escribio
+            OnPropertyChanged(); //Avisa a la interfaz grafica que el texto ha cambiado
+            FiltrarTours(); //filtra los tours
         }
     }
     public TourPage()
     {
         InitializeComponent();
         _usuarioActual = SesionService.UsuarioActual;
-        BindingContext = this;
+        BindingContext = this; //Se declara el binding
 
         // Ocultar el botón agregar tour si el usuario es cliente 
         if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
@@ -80,15 +80,16 @@ public partial class TourPage : ContentPage
             // Se obtiene la lista de tours desde TourService
             var listaTours = await _tourService.ObtenerTodosLosToursAsync();
 
+            //Se limpian las listas para evitar duplicados
             _listaToursCompleta.Clear();
             ToursFiltrados.Clear();
 
-            // Validar si el usuario actual existe y verificar su valor de extranjero
+            // Validar si el usuario es extranjero
             bool esExtranjero = _usuarioActual != null && _usuarioActual.EsExtranjero;
 
             foreach (var tour in listaTours)
             {
-                // Lógica de los precios aplicando de forma segura si es extranjero
+                // Lógica de los precios 
                 tour.AplicarTarifa(esExtranjero);
 
                 // Valida que idiomas no esté vacío
@@ -130,20 +131,20 @@ public partial class TourPage : ContentPage
         await Shell.Current.GoToAsync(nameof(ReservaPage));
     }
 
-    // Método que se ejecuta al presionar el botón de la imagen de filtros
+    // Metodo cuando se abren los filtros
     private async void AbrirFiltros(object sender, EventArgs e)
     {
-        string accion = await Shell.Current.DisplayActionSheet(
+        string accion = await Shell.Current.DisplayActionSheet( //Espera a que el usuario seleccione una opcion y la almacena en la variable accion
             "Filtrar tours por:",
             "Cancelar",
-            null,
+            null,  //Boton de destruccion 
             " Provincia",
             " Dificultad",
             " Limpiar todos los filtros");
 
         if (accion == " Provincia")
         {
-            string provincia = await Shell.Current.DisplayActionSheet(
+            string provincia = await Shell.Current.DisplayActionSheet( //Espera a que el usuario selecciona una opcion y la almacena en provincia
                 "Selecciona la provincia:", "Cancelar", null, "Puntarenas", "San José", "Alajuela", "Cartago", "Heredia", "Guanacaste", "Limón");
 
             if (provincia != "Cancelar" && provincia != null)
@@ -182,6 +183,8 @@ public partial class TourPage : ContentPage
         //Filtro por barra de búsqueda 
         if (!string.IsNullOrWhiteSpace(TextoBusqueda))
         {
+                                    //Toma la coleccion de tours donde conserva los elementos donde t cumple con la condicion
+                                                                                               //Revisa si el nombre del lugar coincide con lo que el user escribio, no distringue entre mayusc y minusc
             resultados = resultados.Where(t => t.NombreLugar != null && t.NombreLugar.Contains(TextoBusqueda, StringComparison.OrdinalIgnoreCase));
         }
 
@@ -199,14 +202,14 @@ public partial class TourPage : ContentPage
 
 
         // Actualizar coleccion tiempo real
-        ToursFiltrados.Clear();
+        ToursFiltrados.Clear(); //Se limpia la coleccion
         foreach (var tour in resultados)
         {
-            ToursFiltrados.Add(tour);
+            ToursFiltrados.Add(tour); //Se agregan los tours
         }
     }
 
-    private async void OnEditarGuiasClicked(object sender, EventArgs e)
+    private async void EditarGuias(object sender, EventArgs e)
     {
         if (_usuarioActual != null && (_usuarioActual.Rol == "guia" || _usuarioActual.Rol == "admin"))
         {
