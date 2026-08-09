@@ -7,10 +7,7 @@
     Shell.FlyoutBehavior="Disabled"
     Title="CRadventure">
 
-   
-    
-
-    <!-- Pestañas -->
+    <!-- Pestañas para navegar en la seccion principal -->
     <TabBar>
         <Tab Title="Tour" Icon="tour.png" Route="TourPage">
             <ShellContent ContentTemplate="{DataTemplate local:TourPage}" />
