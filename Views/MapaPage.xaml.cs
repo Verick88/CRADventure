@@ -37,12 +37,14 @@ public partial class MapaPage : ContentPage
 
             foreach (var m in monumentos)
             {
-                var pin = new Pin
+                var pin = new CustomPin
                 {
                     Label = m.Nombre,
                     Address = m.Zona,
                     Type = PinType.Place,
-                    Location = new Location(m.Latitud, m.Longitud)
+                    Location = new Location(m.Latitud, m.Longitud),
+                    ImageSource = "pin.png",
+                    OnClicked = () => MostrarTarjetaMonumento(m) 
                 };
 
                 pin.MarkerClicked += (s, e) =>
@@ -68,10 +70,18 @@ public partial class MapaPage : ContentPage
         lblNombre.Text = m.Nombre;
         lblHistoria.Text = m.Historia;
 
+        // Se asigna la imagen desde la URL de firebase
+        if (!string.IsNullOrEmpty(m.ImagenUrl))
+        {
+            imgMonumento.Source = ImageSource.FromUri(new Uri(m.ImagenUrl));
+        }
+        else
+        {
+            imgMonumento.Source = null;
+        }
+
         panelMonumento.IsVisible = true;
     }
-
-
 
     private void CerrarPanel_Clicked(object sender, EventArgs e)
     {
