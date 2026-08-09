@@ -11,25 +11,26 @@ public partial class AgregarTourPage : ContentPage
 		InitializeComponent();
 	}
 
-    private async void GuardarTour_Clicked(object sender, EventArgs e)
+    private async void GuardarTour(object sender, EventArgs e)
     {
         try
         {
-            // 1. Conversiones seguras
+            // Conversiones 
             int.TryParse(txtPlazas.Text, out int plazasIngresadas);
             double.TryParse(txtPrecioNacional.Text, out double precioNac);
             double.TryParse(txtPrecioExtranjero.Text, out double precioExt);
             int.TryParse(txtDuracion.Text, out int duracionHoras);
 
-            // 2. Obtener el nombre y apellidos completos desde la sesión actual
+            // Se obtiene nombre y apellidos de la sesion actual
             string nombreGuia = $"{SesionService.UsuarioActual?.Nombre} {SesionService.UsuarioActual?.Apellidos}".Trim();
+
 
             if (string.IsNullOrWhiteSpace(nombreGuia))
             {
                 nombreGuia = "Guía General";
             }
 
-            // 3. Crear el modelo con los x:Name exactos del XAML
+            // Crear el modelo con los x:Name exactos del XAML
             var nuevoTour = new TourModel
             {
                 NombreLugar = txtNombre.Text ?? string.Empty,
@@ -47,11 +48,11 @@ public partial class AgregarTourPage : ContentPage
                 DescripcionLarga = txtDescLarga.Text ?? string.Empty,
                 PuntoEncuentro = txtPuntoEncuentro.Text ?? string.Empty,
 
-                // Asignamos el nombre completo del guía
+                // Se asigna el nombre completo del guia
                 GuiaAsociado = nombreGuia
             };
 
-            // 4. Guardar en Firebase
+            // Se guarda en firebase
             await _tourService.AgregarTourAsync(nuevoTour);
 
             await DisplayAlert("Éxito", "Tour guardado correctamente", "OK");
