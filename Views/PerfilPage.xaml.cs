@@ -45,13 +45,13 @@ public partial class PerfilPage : ContentPage
                     {
                         lblRolUsuario.Text = $"Rol: {usuarioModel.Rol.ToUpper()}";
 
-                        if (usuarioModel.Rol.ToLower() == "admin" || usuarioModel.Rol.ToLower() == "guia" || usuarioModel.Rol.ToLower() == "guía")
+                        if (usuarioModel.Rol.ToLower() == "admin")
                         {
-                            btnPanelAdmin.IsVisible = true;
+                            btnPanelAdmin.IsVisible = true; // Solo el admin lo ve
                         }
                         else
                         {
-                            btnPanelAdmin.IsVisible = false;
+                            btnPanelAdmin.IsVisible = false; // Guías y clientes no lo ven
                         }
                     }
                     else

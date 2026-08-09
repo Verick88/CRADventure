@@ -127,7 +127,16 @@ public partial class TourPage : ContentPage
 
     private async void ClickTour(object sender, SelectionChangedEventArgs e)
     {
-        await Shell.Current.GoToAsync(nameof(ReservaPage));
+        if (e.CurrentSelection.FirstOrDefault() is TourModel tourSeleccionado)
+        {
+            var parametros = new Dictionary<string, object>
+            {
+                { "TourAMostrar", tourSeleccionado }
+            };
+
+            await Shell.Current.GoToAsync(nameof(ReservaPage), parametros);
+            ((CollectionView)sender).SelectedItem = null;
+        }
     }
 
     // Método que se ejecuta al presionar el botón de la imagen de filtros

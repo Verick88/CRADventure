@@ -83,6 +83,9 @@
     <MauiXaml Update="Views\MapaPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\MisReservasPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\PerfilPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

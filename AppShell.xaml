@@ -7,7 +7,6 @@
     Shell.FlyoutBehavior="Disabled"
     Title="CRadventure">
 
-    <!-- Pestañas para navegar en la seccion principal -->
     <TabBar>
         <Tab Title="Tour" Icon="tour.png" Route="TourPage">
             <ShellContent ContentTemplate="{DataTemplate local:TourPage}" />
@@ -15,14 +14,12 @@
         <Tab Title="Mapa" Icon="mapa.png" Route="MapaPage">
             <ShellContent ContentTemplate="{DataTemplate local:MapaPage}" />
         </Tab>
-        <Tab Title="Reservas" Icon="reservas.png" Route="ReservaPage">
-            <ShellContent ContentTemplate="{DataTemplate local:ReservaPage}" />
+        <Tab Title="Reservas" Icon="reservas.png" Route="MisReservasPage">
+            <ShellContent ContentTemplate="{DataTemplate local:MisReservasPage}" />
         </Tab>
+
         <Tab Title="Perfil" Icon="perfil.png" Route="PerfilPage">
             <ShellContent ContentTemplate="{DataTemplate local:PerfilPage}" />
         </Tab>
     </TabBar>
-
-    
-
 </Shell>
