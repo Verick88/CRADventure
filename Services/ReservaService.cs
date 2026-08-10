@@ -87,5 +87,37 @@ namespace CRadventure.Services
                     .UpdateDataAsync(new Dictionary<object, object> { { "plazasDisponibles", cuposActuales + reserva.CantidadEntradas } });
             }
         }
+
+        // Método para crear una nueva reserva y descontar los cupos del tour
+        public async Task CrearReservaAsync(TourModel tour, string userId, int cantidadEntradas, string precioTotalVisual)
+        {
+            // 1. Descontar las plazas disponibles localmente en el objeto
+            tour.PlazasDisponibles -= cantidadEntradas;
+
+            // 2. Actualizar los cupos del tour en Firestore
+            await CrossFirebaseFirestore.Current
+                .GetCollection("tours")
+                .GetDocument(tour.Id)
+                .UpdateDataAsync(new Dictionary<object, object>
+                {
+                    { "plazasDisponibles", tour.PlazasDisponibles }
+                });
+
+            // 3. Construir el objeto ReservaModel
+            var nuevaReserva = new ReservaModel
+            {
+                TourId = tour.Id,
+                UsuarioId = userId,
+                CantidadEntradas = cantidadEntradas,
+                FechaCompra = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
+                PrecioPagado = precioTotalVisual,
+                Estado = "activa"
+            };
+
+            // 4. Guardar la reserva en Firestore
+            await CrossFirebaseFirestore.Current
+                .GetCollection("reservas")
+                .AddDocumentAsync(nuevaReserva);
+        }
     }
 }

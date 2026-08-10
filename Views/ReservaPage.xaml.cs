@@ -1,12 +1,12 @@
 ﻿using CRadventure.Models;
 using CRadventure.Services;
-using Plugin.Firebase.Firestore;
 
 namespace CRadventure.Views;
 
 [QueryProperty(nameof(TourSeleccionado), "TourAMostrar")]
 public partial class ReservaPage : ContentPage
 {
+    private readonly ReservaService _reservaService = new();
     private TourModel _tourSeleccionado;
     private readonly UsuarioModel _usuarioActual;
     private int _cantidadEntradas = 1;
@@ -94,32 +94,8 @@ public partial class ReservaPage : ContentPage
 
         try
         {
-            _tourSeleccionado.PlazasDisponibles -= _cantidadEntradas;
-
-            // 1. Actualizamos los cupos del tour
-            await CrossFirebaseFirestore.Current
-                .GetCollection("tours")
-                .GetDocument(_tourSeleccionado.Id)
-                .UpdateDataAsync(new Dictionary<object, object>
-                {
-                    { "plazasDisponibles", _tourSeleccionado.PlazasDisponibles }
-                });
-
-            // 2. Construimos el objeto ReservaModel (ya con [FirestoreProperty] correctos)
-            var nuevaReserva = new ReservaModel
-            {
-                TourId = _tourSeleccionado.Id,
-                UsuarioId = usuarioAuth.Uid,
-                CantidadEntradas = _cantidadEntradas,
-                FechaCompra = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
-                PrecioPagado = lblTotalPagar.Text,
-                Estado = "activa"
-            };
-
-            // 3. Guardamos el objeto tipado directamente
-            await CrossFirebaseFirestore.Current
-                .GetCollection("reservas")
-                .AddDocumentAsync(nuevaReserva);
+            // Toda la lógica de Firestore ahora la maneja el servicio limpiamente
+            await _reservaService.CrearReservaAsync(_tourSeleccionado, usuarioAuth.Uid, _cantidadEntradas, lblTotalPagar.Text);
 
             await DisplayAlert("¡Éxito!", "Tu reserva se ha guardado correctamente.", "Genial");
             OnPropertyChanged(nameof(TourSeleccionado));
