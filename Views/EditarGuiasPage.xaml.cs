@@ -30,6 +30,7 @@ public partial class EditarGuiasPage : ContentPage
     {
         InitializeComponent();
         BindingContext = this;
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     protected override async void OnAppearing()

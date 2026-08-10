@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CRadventure.Views.AgregarTourPage"
-             NavigationPage.HasNavigationBar="False">
+             Shell.NavBarIsVisible="False">
 
     <Grid>
         <!-- Fondo de pantalla -->
@@ -16,12 +16,39 @@
         <ScrollView Padding="20">
             <VerticalStackLayout Spacing="15">
 
-                <Label Text="Crear Nuevo Tour"
-                       TextColor="White"
-                       FontSize="22"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,10"/>
+                <!-- Encabezado con Botón de Regresar y Título en Recuadro -->
+                <Grid ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,10">
+                    <Button Grid.Column="0"
+                            Text="◀" 
+                            Clicked="Regresarbtn"
+                            BackgroundColor="#1C2520" 
+                            TextColor="White"
+                            CornerRadius="10"
+                            WidthRequest="45"
+                            HeightRequest="45"
+                            VerticalOptions="Center"/>
+
+                    <!-- Recuadro para el título -->
+                    <Border Grid.Column="1"
+                            BackgroundColor="#1C2520"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10"
+                            HeightRequest="45"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Center"
+                            Margin="10,0,0,0"
+                            Padding="10,0">
+                        <Label Text="Crear Nuevo Tour"
+                               TextColor="White"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <!-- Espaciador invisible para mantener la simetría si es necesario, 
+                         o podemos dejarlo libre ya que el Grid de 3 columnas distribuye el espacio -->
+                </Grid>
 
                 <!-- Título del Tour -->
                 <VerticalStackLayout Spacing="5">
@@ -193,7 +220,7 @@
                     <Label Text="Descripción Corta (Tarjeta)" 
                            TextColor="#B0BEC5" 
                            FontSize="13"/>
-                    <Editor x:Name="txtDescCorta" 
+                    <Editor x:Name="txtDescCorta"  
                             Placeholder="Resumen visible en la lista..." 
                             MaxLength="60" 
                             TextColor="White" 
@@ -207,7 +234,7 @@
                     <Label Text="Descripción Larga (Detalle de Reserva)" 
                            TextColor="#B0BEC5" 
                            FontSize="13"/>
-                    <Editor x:Name="txtDescLarga" 
+                    <Editor x:Name="txtDescLarga"  
                             Placeholder="Información completa que se muestra al reservar..." 
                             TextColor="White" 
                             PlaceholderColor="#607D8B" 

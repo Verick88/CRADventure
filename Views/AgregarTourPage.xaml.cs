@@ -11,6 +11,11 @@ public partial class AgregarTourPage : ContentPage
 		InitializeComponent();
 	}
 
+    private async void Regresarbtn(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
     private async void GuardarTour(object sender, EventArgs e)
     {
         try
