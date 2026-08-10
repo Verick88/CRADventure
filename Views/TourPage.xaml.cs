@@ -89,6 +89,10 @@ public partial class TourPage : ContentPage
 
             foreach (var tour in listaTours)
             {
+                // Ocultar el tour si las plazas disponibles son iguales o menores a 0
+                if (tour.PlazasDisponibles <= 0)
+                    continue;
+
                 // Lógica de los precios 
                 tour.AplicarTarifa(esExtranjero);
 
@@ -187,7 +191,8 @@ public partial class TourPage : ContentPage
     // Lógica para filtrar
     private void FiltrarTours()
     {
-        var resultados = _listaToursCompleta.AsEnumerable();
+        // Se parte desde la lista completa omitiendo agotados
+        var resultados = _listaToursCompleta.Where(t => t.PlazasDisponibles > 0);
 
         //Filtro por barra de búsqueda 
         if (!string.IsNullOrWhiteSpace(TextoBusqueda))
