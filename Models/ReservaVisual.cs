@@ -19,6 +19,7 @@ namespace CRadventure.Models
         public string Provincia { get; set; } = string.Empty;
         public string DuracionTour { get; set; } = string.Empty;
         public string GuiaAsociado { get; set; } = string.Empty;
+        public string PuntoEncuentro { get; set; } = string.Empty;
 
         public bool EsActiva => Estado == "activa";
         public string ColorEstado => EsActiva ? "#93C94A" : "#757575";

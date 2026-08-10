@@ -4,6 +4,7 @@ using Microsoft.Maui.Maps.Handlers;
 
 namespace CRadventure;
 
+//Aplicar skin al mapa
 public static class MapStyleHelper
 {
     public static void ApplyStyle(MapHandler mapHandler)
@@ -21,6 +22,7 @@ public class MapStyleCallback : Java.Lang.Object, Android.Gms.Maps.IOnMapReadyCa
     {
         try
         {
+            //Estructura JSON para cambiar los colores 
             string styleJson = @"[
               { ""elementType"": ""geometry"", ""stylers"": [{ ""color"": ""#f5f3ef"" }] },
               { ""elementType"": ""labels.text.fill"", ""stylers"": [{ ""color"": ""#5e4b3c"" }] },

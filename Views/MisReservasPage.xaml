@@ -129,6 +129,15 @@
                                             </HorizontalStackLayout>
                                         </Grid>
 
+                                        <!-- Punto de Encuentro -->
+                                        <Grid ColumnDefinitions="Auto, *" Margin="0,2,0,0">
+                                            <HorizontalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Start">
+                                                <Label Text="🗺️" FontSize="13"/>
+                                                <Label Text="Punto:" TextColor="#A0A0A0" FontSize="13"/>
+                                            </HorizontalStackLayout>
+                                            <Label Grid.Column="1" Text="{Binding PuntoEncuentro}" TextColor="#B0BEC5" FontSize="13" LineBreakMode="WordWrap"/>
+                                        </Grid>
+
                                         <!-- Guía Asociado -->
                                         <HorizontalStackLayout Spacing="6" Margin="0,2,0,0">
                                             <Label Text="👤" FontSize="13" VerticalOptions="Center"/>

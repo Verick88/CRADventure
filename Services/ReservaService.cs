@@ -51,7 +51,8 @@ namespace CRadventure.Services
                             // Nuevas propiedades mapeadas desde el TourModel
                             Provincia = tourData.Provincia,
                             DuracionTour = tourData.DuracionVisual,
-                            GuiaAsociado = tourData.GuiaAsociado
+                            GuiaAsociado = tourData.GuiaAsociado,
+                            PuntoEncuentro = string.IsNullOrEmpty(tourData.PuntoEncuentro) ? "Por definir" : tourData.PuntoEncuentro
                         };
 
                         listaVisuales.Add(visual);
