@@ -22,3 +22,4 @@ public class ReservaModel
     [FirestoreProperty("estado")]
     public string Estado { get; set; } = "activa";
 }
+
