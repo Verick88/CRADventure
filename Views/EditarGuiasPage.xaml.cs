@@ -57,10 +57,9 @@ public partial class EditarGuiasPage : ContentPage
             }
             else
             {
-                string nombreCompleto = $"{user.Nombre} {user.Apellidos}".Trim();
                 _todosLosTours = lista.Where(t =>
-                    (t.GuiaAsociado?.Trim().Equals(user.Uid, StringComparison.OrdinalIgnoreCase) == true) ||
-                    (t.GuiaAsociado?.Trim().Equals(nombreCompleto, StringComparison.OrdinalIgnoreCase) == true)
+                    !string.IsNullOrEmpty(t.GuiaEmail) &&
+                    t.GuiaEmail.Trim().Equals(user.Email?.Trim(), StringComparison.OrdinalIgnoreCase)
                 ).ToList();
             }
 

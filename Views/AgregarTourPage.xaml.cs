@@ -30,6 +30,9 @@ public partial class AgregarTourPage : ContentPage
                 nombreGuia = "Guía General";
             }
 
+            //Obtener el correo del guia
+            string emailGuia = SesionService.UsuarioActual?.Email ?? string.Empty;
+
             // Crear el modelo con los x:Name exactos del XAML
             var nuevoTour = new TourModel
             {
@@ -47,8 +50,7 @@ public partial class AgregarTourPage : ContentPage
                 DescripcionCorta = txtDescCorta.Text ?? string.Empty,
                 DescripcionLarga = txtDescLarga.Text ?? string.Empty,
                 PuntoEncuentro = txtPuntoEncuentro.Text ?? string.Empty,
-
-                // Se asigna el nombre completo del guia
+                GuiaEmail = emailGuia,
                 GuiaAsociado = nombreGuia
             };
 

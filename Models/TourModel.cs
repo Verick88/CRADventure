@@ -59,6 +59,9 @@ namespace CRadventure.Models
         [FirestoreProperty("fechaTour")]
         public string FechaHoraVisual { get; set; } = "Fecha por definir"; //TourPage
 
+        [FirestoreProperty("guia_email")]
+        public string GuiaEmail { get; set; } = string.Empty;
+
         public string PrecioVisual { get; set; } = string.Empty; //TourPage
 
         public void AplicarTarifa(bool esExtranjero)
