@@ -16,7 +16,7 @@
         <ScrollView Padding="20">
             <VerticalStackLayout Spacing="15">
 
-                <!-- Encabezado con Botón de Regresar y Título en Recuadro -->
+                <!-- Btn de regresar y titulo -->
                 <Grid ColumnDefinitions="Auto, *, Auto" Margin="0,0,0,10">
                     <Button Grid.Column="0"
                             Text="◀" 
@@ -28,7 +28,7 @@
                             HeightRequest="45"
                             VerticalOptions="Center"/>
 
-                    <!-- Recuadro para el título -->
+                    <!-- Recuadro para el titulo -->
                     <Border Grid.Column="1"
                             BackgroundColor="#1C2520"
                             StrokeThickness="0"
@@ -46,11 +46,10 @@
                                VerticalOptions="Center"/>
                     </Border>
 
-                    <!-- Espaciador invisible para mantener la simetría si es necesario, 
-                         o podemos dejarlo libre ya que el Grid de 3 columnas distribuye el espacio -->
+
                 </Grid>
 
-                <!-- Título del Tour -->
+                <!-- Titulo del tour -->
                 <VerticalStackLayout Spacing="5">
                     <Label Text="Título del Tour" 
                            TextColor="#B0BEC5" 
@@ -63,7 +62,7 @@
                            HeightRequest="45"/>
                 </VerticalStackLayout>
 
-                <!-- URL de la Imagen -->
+                <!-- URL de la imagen -->
                 <VerticalStackLayout Spacing="5">
                     <Label Text="URL de la Imagen" 
                            TextColor="#B0BEC5" 
@@ -76,7 +75,7 @@
                            HeightRequest="45"/>
                 </VerticalStackLayout>
 
-                <!-- Provincia y Dificultad -->
+                <!-- Provincia y dificultad -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                     <VerticalStackLayout Grid.Column="0" Spacing="5">
                         <Label Text="Provincia" 

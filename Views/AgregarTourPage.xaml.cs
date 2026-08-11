@@ -38,7 +38,7 @@ public partial class AgregarTourPage : ContentPage
             //Obtener el correo del guia
             string emailGuia = SesionService.UsuarioActual?.Email ?? string.Empty;
 
-            // Crear el modelo con los x:Name exactos del XAML
+            // Crear el modelo con los x:Name del xaml
             var nuevoTour = new TourModel
             {
                 NombreLugar = txtNombre.Text ?? string.Empty,

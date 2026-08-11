@@ -22,7 +22,7 @@ public partial class EditarGuiasPage : ContentPage
         {
             _textoBusqueda = value;
             OnPropertyChanged();
-            Filtrar();
+            Filtrar(); //Filtra por medio del texto que se escribe
         }
     }
 
@@ -30,7 +30,7 @@ public partial class EditarGuiasPage : ContentPage
     {
         InitializeComponent();
         BindingContext = this;
-        NavigationPage.SetHasNavigationBar(this, false);
+        NavigationPage.SetHasNavigationBar(this, false); //Ocultar pestana maui
     }
 
     protected override async void OnAppearing()
@@ -95,19 +95,21 @@ public partial class EditarGuiasPage : ContentPage
         }
     }
 
-    private async void OnVolverClicked(object sender, EventArgs e)
+    private async void VolverClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("..");
     }
 
-    private async void OnTourSelected(object sender, SelectionChangedEventArgs e)
+    //Metodo para ir al tour seleccionado
+    private async void TourSeleccionado(object sender, SelectionChangedEventArgs e)
     {
+        //Revisa si el usuario selecciono un tour valido (seguridad)
         if (e.CurrentSelection.FirstOrDefault() is not TourModel tour)
         {
             return;
         }
 
-        ((CollectionView)sender).SelectedItem = null;
-        await Shell.Current.GoToAsync($"{nameof(EditarGuiasDetallePage)}?TourId={tour.Id}");
+        ((CollectionView)sender).SelectedItem = null; //Quita el sombreado del tour cuando se regrese, para que no quede seleccionado
+        await Shell.Current.GoToAsync($"{nameof(EditarGuiasDetallePage)}?TourId={tour.Id}"); //Dirige a la ruta con el ID unico del tour
     }
 }

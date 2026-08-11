@@ -18,9 +18,9 @@ public class MonumentoService
             .GetCollection(Coleccion)
             .GetDocumentsAsync<MonumentoModel>();
 
-        return resultado.Documents
-            .Select(d => d.Data)
-            .Where(m => m.Activo)
-            .ToList();
+        return resultado.Documents //Accede a la lista de documentos
+            .Select(d => d.Data)//Recorre la lista extrayendo los datos
+            .Where(m => m.Activo) //Filtra que el activo sea true
+            .ToList(); //Convierte a lista
     }
 }

@@ -8,14 +8,13 @@
     Title="RegisterPage">
 
     <Grid>
-        <!-- Imagen de fondo que cubre toda la pantalla -->
+        <!-- Imagen de fondo -->
         <Image
             Source="b1.png"
             Aspect="AspectFill"
             HorizontalOptions="Fill"
             VerticalOptions="Fill"/>
 
-        <!-- Capa de degradado oscuro sobre la imagen -->
         <BoxView 
             HorizontalOptions="Fill" 
             VerticalOptions="Fill">

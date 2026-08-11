@@ -18,7 +18,7 @@ public partial class AdminPage : ContentPage
         _usuarioService = new UsuarioService();
     }
 
-    // 1. Botón Buscar
+    //Botón Buscar
     private async void OnBuscarClicked(object sender, EventArgs e)
     {
         string email = txtEmailBusqueda.Text?.Trim();
@@ -29,22 +29,22 @@ public partial class AdminPage : ContentPage
             return;
         }
 
-        // Ocultamos la tarjeta por si había una búsqueda anterior
+        //Ocultar la tarjeta si habia una busqueda anterior
         frmResultado.IsVisible = false;
 
-        // Vamos a la base de datos
+        //Se obtiene al user por email
         _usuarioEncontrado = await _usuarioService.ObtenerUsuarioPorEmailAsync(email);
 
         if (_usuarioEncontrado != null)
         {
-            // Llenamos la tarjeta con los datos de Firestore
+            //Se llena la tarjeta con datos de firestore
             lblNombreUsuario.Text = $"{_usuarioEncontrado.Nombre} {_usuarioEncontrado.Apellidos}";
             lblCorreoUsuario.Text = _usuarioEncontrado.Email;
 
-            // Si el rol viene vacío por alguna razón, asumimos que es cliente
+            //Si el rol viene vacio, se asume que es cliente
             lblRolActual.Text = string.IsNullOrEmpty(_usuarioEncontrado.Rol) ? "cliente" : _usuarioEncontrado.Rol;
 
-            // Mostramos la tarjeta
+            //Se muestra la tarjeta
             frmResultado.IsVisible = true;
         }
         else
@@ -53,36 +53,36 @@ public partial class AdminPage : ContentPage
         }
     }
 
-    // 2. Botón Hacer Cliente (Rojo)
+    //Botón Hacer Cliente
     private async void OnRevocarClicked(object sender, EventArgs e)
     {
         if (_usuarioEncontrado != null)
         {
-            // Cambiamos el rol localmente
+            //Se cambia el rol localmente
             _usuarioEncontrado.Rol = "cliente";
 
-            // Lo guardamos en Firebase usando nuestro servicio
+            //Se cambia en Firebase usando el servicio
             await _usuarioService.GuardarUsuarioAsync(_usuarioEncontrado);
 
-            // Actualizamos la pantallita para que diga "cliente"
+            // Se actualiza en la pantalla para que diga cliente
             lblRolActual.Text = "cliente";
 
             await DisplayAlert("Éxito", "Permisos revocados. El usuario ahora es un Cliente normal.", "OK");
         }
     }
 
-    // 3. Botón Hacer Guía (Verde)
+    //Boton hacer guia
     private async void OnAscenderClicked(object sender, EventArgs e)
     {
         if (_usuarioEncontrado != null)
         {
-            // Cambiamos el rol localmente
+            //Se cambia el rol localmente
             _usuarioEncontrado.Rol = "guia";
 
-            // Lo guardamos en Firebase usando nuestro servicio
+            //Se guarda en Firebase usando el servicio
             await _usuarioService.GuardarUsuarioAsync(_usuarioEncontrado);
 
-            // Actualizamos la pantallita para que diga "guia"
+            //Se actualiza en la pantalla para que diga guia
             lblRolActual.Text = "guia";
 
             await DisplayAlert("Éxito", "Permisos otorgados. El usuario ahora es un Guía.", "OK");

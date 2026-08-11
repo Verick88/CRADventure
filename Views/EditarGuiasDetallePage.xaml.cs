@@ -6,19 +6,19 @@ namespace CRadventure.Views;
 [QueryProperty(nameof(TourId), "TourId")]
 public partial class EditarGuiasDetallePage : ContentPage
 {
-    private readonly TourService _tourService = new TourService();
+    private readonly TourService _tourService = new TourService(); //Inicializa la instancia del servicio
 
     private string _tourId;
     public string TourId
     {
         get
         {
-            return _tourId;
+            return _tourId; //Ver el tour actual
         }
-        set
+        set //Cuando algo cambia
         {
-            _tourId = value;
-            CargarTourPorId(_tourId);
+            _tourId = value; //Guarda el ID que se le acaba de pasar
+            CargarTourPorId(_tourId); //Va a Firebase por medio del metodo y busca los datos con ese ID
         }
     }
 
@@ -27,12 +27,12 @@ public partial class EditarGuiasDetallePage : ContentPage
     {
         get
         {
-            return _tourActual;
+            return _tourActual; //Ver el tour actual
         }
-        set
+        set //Cuando algo cambia
         {
-            _tourActual = value;
-            OnPropertyChanged();
+            _tourActual = value; //Guarda el nuevo dato en memoria
+            OnPropertyChanged();//Cambia lo que se muestra en tiempo real
         }
     }
 
@@ -42,12 +42,13 @@ public partial class EditarGuiasDetallePage : ContentPage
         BindingContext = this;
     }
 
+
     private async void CargarTourPorId(string id)
     {
         try
         {
-            var todos = await _tourService.ObtenerTodosLosToursAsync();
-            var encontrado = todos.FirstOrDefault(t => t.Id == id);
+            var todos = await _tourService.ObtenerTodosLosToursAsync(); //Servicio para obtener los tours
+            var encontrado = todos.FirstOrDefault(t => t.Id == id); //Busca en todos los tours hasta coincidir el id
 
             if (encontrado != null)
             {
@@ -65,7 +66,8 @@ public partial class EditarGuiasDetallePage : ContentPage
         }
     }
 
-    private async void OnGuardarClicked(object sender, EventArgs e)
+    //Metodo para guardar el tour editado
+    private async void GuardarClicked(object sender, EventArgs e)
     {
         bool confirmar = await DisplayAlert("Confirmar", "¿Deseas guardar los cambios de este tour?", "Sí", "No");
         if (!confirmar)
@@ -75,7 +77,7 @@ public partial class EditarGuiasDetallePage : ContentPage
 
         try
         {
-            await _tourService.ActualizarTourAsync(TourActual);
+            await _tourService.ActualizarTourAsync(TourActual); //Llama al servicio para actualizar tours
 
             await DisplayAlert("Éxito", "Tour actualizado correctamente.", "OK");
             await Shell.Current.GoToAsync("..");
@@ -86,7 +88,8 @@ public partial class EditarGuiasDetallePage : ContentPage
         }
     }
 
-    private async void OnEliminarClicked(object sender, EventArgs e)
+    //Metodo para eliminar tour
+    private async void EliminarClicked(object sender, EventArgs e)
     {
         bool confirmar = await DisplayAlert("Advertencia", "¿Estás seguro de eliminar este tour permanentemente?", "Sí, eliminar", "Cancelar");
         if (!confirmar)
@@ -96,7 +99,7 @@ public partial class EditarGuiasDetallePage : ContentPage
 
         try
         {
-            await _tourService.EliminarTourAsync(TourActual.Id);
+            await _tourService.EliminarTourAsync(TourActual.Id); //Llama al servicio para eliminar por id
 
             await DisplayAlert("Eliminado", "El tour ha sido eliminado.", "OK");
             await Shell.Current.GoToAsync("..");
@@ -107,7 +110,7 @@ public partial class EditarGuiasDetallePage : ContentPage
         }
     }
 
-    private async void OnVolverClicked(object sender, EventArgs e)
+    private async void VolverClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("..");
     }

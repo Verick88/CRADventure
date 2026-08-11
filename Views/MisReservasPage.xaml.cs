@@ -24,6 +24,7 @@ public partial class MisReservasPage : ContentPage
         await CargarMisReservas();
     }
 
+    //Carga las reservas
     private async Task CargarMisReservas()
     {
         var usuarioAuth = Plugin.Firebase.Auth.CrossFirebaseAuth.Current.CurrentUser;
@@ -31,20 +32,20 @@ public partial class MisReservasPage : ContentPage
 
         try
         {
-            MisReservas.Clear();
-            var reservasObtenidas = await _reservaService.ObtenerReservasUsuarioAsync(usuarioAuth.Uid);
+            MisReservas.Clear(); //Limpia la lista actual
+            var reservasObtenidas = await _reservaService.ObtenerReservasUsuarioAsync(usuarioAuth.Uid); //Llama al servicio de obtener reservas de un usuario
 
             foreach (var reserva in reservasObtenidas)
             {
-                MisReservas.Add(reserva);
+                MisReservas.Add(reserva); //Recorre una a una cada reserva y las va agregando
             }
 
-            if (MisReservas.Count == 0)
+            if (MisReservas.Count == 0) //Si las reservas estan en 0, se muestra la lista vacia para que cargue la imagen
             {
                 layoutVacio.IsVisible = true;
                 listaReservas.IsVisible = false;
             }
-            else
+            else  //Si hay reservas, muestra la lista de reservas
             {
                 layoutVacio.IsVisible = false;
                 listaReservas.IsVisible = true;
@@ -56,6 +57,7 @@ public partial class MisReservasPage : ContentPage
         }
     }
 
+    //Metodo para cancelar una reserva
     private async Task CancelarReserva(ReservaVisual reserva)
     {
         bool confirmar = await DisplayAlert("Cancelar Reserva",
@@ -66,7 +68,7 @@ public partial class MisReservasPage : ContentPage
 
         try
         {
-            await _reservaService.CancelarReservaAsync(reserva);
+            await _reservaService.CancelarReservaAsync(reserva); //Llama al servicio de cancelar reserva
 
             await DisplayAlert("Cancelada", "Reserva cancelada y cupos devueltos.", "OK");
             await CargarMisReservas();

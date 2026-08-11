@@ -21,6 +21,7 @@ public static class MauiProgram
             });
 
 #if ANDROID
+        //Aplicarle la skin al mapa
         MapHandler.Mapper.AppendToMapping("CustomMapStyle", (handler, view) =>
         {
             if (handler is MapHandler mapHandler)
@@ -29,6 +30,7 @@ public static class MauiProgram
             }
         });
 
+        //Aplicar el cambio de pin
         MapHandler.Mapper.Add("Pins", (handler, view) => { });
 
         MapHandler.Mapper.AppendToMapping("CustomPinHandler", (handler, view) =>
@@ -67,7 +69,7 @@ public class MapReadyCallbackCustom : Java.Lang.Object, Android.Gms.Maps.IOnMapR
         _googleMap.SetMinZoomPreference(7.5f);
         _googleMap.UiSettings.RotateGesturesEnabled = false;
 
-        // Dibujamos los pines iniciales
+        //Dibuja los pines iniciales
         DibujarPines();
 
         // Escuchamos si se agregan más pines dinámicamente en el código

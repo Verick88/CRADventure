@@ -15,9 +15,9 @@
         <!-- Contenedor Principal en Grid con 3 filas: Botón Volver/Título, Búsqueda y Lista -->
         <Grid RowDefinitions="Auto, Auto, *" Margin="15" RowSpacing="10">
 
-            <!-- Fila 0: BOTÓN VOLVER Y TÍTULO -->
+            <!-- Fila 0: btn volver y titulo -->
             <Grid Grid.Row="0" ColumnDefinitions="Auto, *" ColumnSpacing="10">
-                <!-- Botón Volver -->
+                <!-- Boton Volver -->
                 <Button Grid.Column="0"
                         Text="◀"
                         TextColor="White"
@@ -27,9 +27,9 @@
                         WidthRequest="48"
                         HeightRequest="48"
                         CornerRadius="8"
-                        Clicked="OnVolverClicked"/>
+                        Clicked="VolverClicked"/>
 
-                <!-- Título -->
+                <!-- Titulo -->
                 <Border Grid.Column="1"
                         BackgroundColor="#1C2520"
                         Stroke="#33FFFFFF"
@@ -46,7 +46,7 @@
                 </Border>
             </Grid>
 
-            <!-- Fila 1: BARRA DE BÚSQUEDA POR TÍTULO -->
+            <!-- Fila 1: barra de busqueda por titulo -->
             <SearchBar Grid.Row="1"
                        Placeholder="Buscar por título..."
                        Text="{Binding TextoBusqueda}"
@@ -56,12 +56,12 @@
                        CancelButtonColor="White"
                        HeightRequest="48" />
 
-            <!-- Fila 2: LISTA DE TOURS FILTRADOS -->
+            <!-- Fila 2: Lista de tours filtrados -->
             <CollectionView Grid.Row="2"
                             x:Name="cvMisTours"
                             ItemsSource="{Binding ToursList}"
                             SelectionMode="Single"
-                            SelectionChanged="OnTourSelected">
+                            SelectionChanged="TourSeleccionado">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="0,6" 
@@ -94,7 +94,7 @@
                                        TextColor="#B0BEC5" 
                                        FontSize="12"/>
 
-                                <!-- Precio y Guía -->
+                                <!-- Precio y Guia -->
                                 <Label Grid.Row="2" Grid.Column="0"
                                        Text="{Binding PrecioVisual}" 
                                        TextColor="#93C94A" 

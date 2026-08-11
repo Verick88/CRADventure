@@ -121,7 +121,7 @@ public partial class LoginPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error Técnico de Firebase", ex.Message, "OK");
+            await DisplayAlert("Error", "No se pudo iniciar sesión. Verifica tus datos.", "OK");
         }
         finally
         {

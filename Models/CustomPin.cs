@@ -7,9 +7,9 @@ using Microsoft.Maui.Controls.Maps;
 
 namespace CRadventure.Models
 {
-    internal class CustomPin : Pin
+    internal class CustomPin : Pin //Crear Pin personalizado
     {
-        public string ImageSource { get; set; } = string.Empty;
-        public Action? OnClicked { get; set; }
+        public string ImageSource { get; set; } = string.Empty; //Asignar ruta de imagen
+        public Action? OnClicked { get; set; } //Define una accion cuando el usuario de click a un pin
     }
 }

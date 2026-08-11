@@ -84,7 +84,7 @@ public partial class TourPage : ContentPage
             _listaToursCompleta.Clear();
             ToursFiltrados.Clear();
 
-            // Validar si el usuario es extranjero
+            // Valida si el usuario es extranjero
             bool esExtranjero = _usuarioActual != null && _usuarioActual.EsExtranjero;
 
             foreach (var tour in listaTours)

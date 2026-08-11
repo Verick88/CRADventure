@@ -13,18 +13,20 @@ namespace CRadventure.Services
         // Método para obtener y combinar las reservas del usuario con los datos de sus tours
         public async Task<List<ReservaVisual>> ObtenerReservasUsuarioAsync(string userId)
         {
-            var listaVisuales = new List<ReservaVisual>();
+            var listaVisuales = new List<ReservaVisual>(); //Crea lista vacia para ir almacenando
 
+            //Descarga de las reservas
             var snapshotReservas = await CrossFirebaseFirestore.Current
                 .GetCollection("reservas")
                 .GetDocumentsAsync<ReservaModel>();
 
+            //Ciclo por cada una de las reservas encontradas
             foreach (var doc in snapshotReservas.Documents)
             {
-                var reservaData = doc.Data;
-                if (reservaData == null) continue;
+                var reservaData = doc.Data; //Extrae datos de la reserva actual
+                if (reservaData == null) continue; //Si es null, ignora y continua
 
-                if (reservaData.UsuarioId?.Trim() == userId.Trim())
+                if (reservaData.UsuarioId?.Trim() == userId.Trim()) //Compara el ID del usuario con la sesion iniciada con el ID del user que realizo la reserva
                 {
                     string tourId = reservaData.TourId;
 
@@ -34,8 +36,9 @@ namespace CRadventure.Services
                         .GetDocumentSnapshotAsync<TourModel>();
 
                     var tourData = docTour?.Data;
-                    if (tourData != null)
+                    if (tourData != null) //Valida que tour realmente exista en la base de datos
                     {
+                        //Creacion del objeto visual
                         var visual = new ReservaVisual
                         {
                             ReservaId = doc.Reference.Id,
@@ -48,7 +51,6 @@ namespace CRadventure.Services
                             ImagenUrl = tourData.ImagenUrl,
                             FechaTour = string.IsNullOrEmpty(tourData.FechaHoraVisual) ? "Por definir" : tourData.FechaHoraVisual,
 
-                            // Nuevas propiedades mapeadas desde el TourModel
                             Provincia = tourData.Provincia,
                             DuracionTour = tourData.DuracionVisual,
                             GuiaAsociado = tourData.GuiaAsociado,
@@ -63,16 +65,16 @@ namespace CRadventure.Services
             return listaVisuales;
         }
 
-        // Método para cancelar la reserva y devolver los cupos al tour correspondiente
+        // Metodo para cancelar reserva y devolver tiquetes
         public async Task CancelarReservaAsync(ReservaVisual reserva)
         {
-            // 1. Actualizar el estado de la reserva a cancelada
+            //Actualiza el estado de la reserva a cancelada
             await CrossFirebaseFirestore.Current
                 .GetCollection("reservas")
                 .GetDocument(reserva.ReservaId)
                 .UpdateDataAsync(new Dictionary<object, object> { { "estado", "cancelada" } });
 
-            // 2. Obtener el tour para devolverle los cupos disponibles
+            //Obtiene el tour para devolverle los cupos disponibles
             var docTour = await CrossFirebaseFirestore.Current
                 .GetCollection("tours")
                 .GetDocument(reserva.TourId)
@@ -89,13 +91,13 @@ namespace CRadventure.Services
             }
         }
 
-        // Método para crear una nueva reserva y descontar los cupos del tour
+        // Metodo crea nueva reserva y descuenta los tiquetes
         public async Task CrearReservaAsync(TourModel tour, string userId, int cantidadEntradas, string precioTotalVisual)
         {
-            // 1. Descontar las plazas disponibles localmente en el objeto
+            //Descuenta las plazas disponibles localmente en el objeto
             tour.PlazasDisponibles -= cantidadEntradas;
 
-            // 2. Actualizar los cupos del tour en Firestore
+            //Actualiza los cupos del tour en Firestore
             await CrossFirebaseFirestore.Current
                 .GetCollection("tours")
                 .GetDocument(tour.Id)
@@ -104,7 +106,7 @@ namespace CRadventure.Services
                     { "plazasDisponibles", tour.PlazasDisponibles }
                 });
 
-            // 3. Construir el objeto ReservaModel
+            //Construye el objeto ReservaModel
             var nuevaReserva = new ReservaModel
             {
                 TourId = tour.Id,
@@ -115,7 +117,7 @@ namespace CRadventure.Services
                 Estado = "activa"
             };
 
-            // 4. Guardar la reserva en Firestore
+            //Guarda la reserva en Firestore
             await CrossFirebaseFirestore.Current
                 .GetCollection("reservas")
                 .AddDocumentAsync(nuevaReserva);
